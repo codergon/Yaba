@@ -1,0 +1,39 @@
+// FLEXDIRECTION -> ROW
+%row-center {
+  align-items: center;
+  flex-direction: row;
+}
+%row-spaced {
+  flex-direction: row;
+  justify-content: space-between;
+}
+%row-center-spaced {
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+%row-middle {
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+
+// FLEXDIRECTION -> COLUMN
+%column-center {
+  align-items: center;
+  flex-direction: column;
+}
+%column-spaced {
+  flex-direction: column;
+  justify-content: space-between;
+}
+%column-center-spaced {
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+%column-middle {
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}

@@ -1,0 +1,11 @@
+.base-tabs {
+  width: 100%;
+  display: flex;
+  overflow-y: scroll;
+  flex-direction: column;
+  // height: calc(600px - 32px);
+  div,
+  button {
+    display: flex;
+  }
+}

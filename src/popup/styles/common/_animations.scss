@@ -1,0 +1,21 @@
+@mixin fadeLeft {
+  animation-name: fadeLeft;
+  animation-duration: 0.3s;
+
+  @keyframes fadeLeft {
+    0% {
+      transform: translate(20px, 0);
+      opacity: 0;
+    }
+    100% {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+  }
+}
+
+.base-animation {
+  &--fade-left {
+    @include fadeLeft;
+  }
+}
