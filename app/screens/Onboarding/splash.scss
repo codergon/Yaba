@@ -1,0 +1,156 @@
+@import "../../styles/core/partials";
+
+.page-content.splash-screen {
+  height: 600px;
+  padding: 0px !important;
+  background: var(--primary-color);
+  div,
+  button {
+    display: flex;
+  }
+
+  .bg-illustration {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    @extend %row-middle;
+    position: relative;
+    svg {
+      display: flex;
+      width: 100% !important;
+    }
+
+    .content {
+      width: 100%;
+      padding: 0px 20px;
+      position: absolute;
+      align-items: center;
+      flex-direction: column;
+      h2 {
+        color: #fff;
+        font-size: 56px;
+      }
+
+      button {
+        height: 46px;
+        font-weight: 500;
+        font-size: 14px;
+        margin-top: 14px;
+        padding: 7px 60px;
+        border-radius: 8px;
+        align-items: center;
+        justify-content: center;
+        text-transform: uppercase;
+
+        color: #fff;
+        word-spacing: 3px;
+        letter-spacing: 0.8px;
+        background: #465e73;
+      }
+    }
+  }
+
+  .slides-screen {
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+
+    .bottom-nav {
+      align-items: center;
+      flex-direction: row;
+      padding: 10px 20px 30px;
+      justify-content: center;
+      .pad {
+        width: 25px;
+      }
+      .bullets {
+        gap: 12px;
+        @extend %row-middle;
+        .bullet {
+          width: 10px;
+          height: 10px;
+          cursor: pointer;
+          border-radius: 10px;
+          background-color: #929292;
+          &.active {
+            background: var(--interactive);
+          }
+        }
+      }
+    }
+
+    .signin-btn-cover {
+      margin-left: 20px;
+      margin-bottom: 30px;
+      flex-direction: column;
+      width: calc(100% - 40px);
+      .error-msg {
+        width: 100%;
+        margin-top: 8px;
+        font-size: 12px;
+        color: #ff9669;
+        text-align: center;
+      }
+    }
+    .signin-btn {
+      width: 100%;
+      height: 48px;
+      font-size: 14px;
+      font-weight: 500;
+      background: #fff;
+      border-radius: 8px;
+      @extend %row-middle;
+      text-transform: uppercase;
+      p {
+        padding-top: 1px;
+        margin: 0px 8px;
+      }
+    }
+
+    .slides-container {
+      flex: 1;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+      flex-direction: column;
+      .slides {
+        left: 0px;
+        width: 300%;
+        height: 100%;
+        position: absolute;
+        flex-direction: row;
+        transition: left 0.3s;
+        &[data-slide="1"] {
+          left: -100%;
+        }
+        &[data-slide="2"] {
+          left: -200%;
+        }
+
+        .slide {
+          gap: 8px;
+          color: #f4f4f4;
+          padding: 30px 20px 0px;
+          width: calc(100% / 3);
+          flex-direction: column;
+
+          .illustration {
+            width: 100%;
+            margin-top: 20px;
+          }
+
+          h2 {
+            font-size: 24px;
+            line-height: 1.25;
+            font-weight: 800;
+          }
+          p {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 1.43;
+          }
+        }
+      }
+    }
+  }
+}

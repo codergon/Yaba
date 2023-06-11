@@ -1,0 +1,425 @@
+@import "../core/partials";
+
+.page-content.add-bookmarks {
+  padding-top: 6px;
+  padding-bottom: 14px;
+
+  $blur-bg: #f7f7f7;
+
+  *:not(textarea) {
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+  }
+
+  %select {
+    user-select: text !important;
+    -ms-user-select: text !important;
+    -moz-user-select: text !important;
+    -khtml-user-select: text !important;
+    -webkit-user-select: text !important;
+  }
+
+  %action-btn {
+    height: 46px;
+    font-size: 14px;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+  }
+
+  .content-block {
+    margin-top: 4px;
+    padding-top: 14px;
+    overflow-y: scroll;
+    padding-bottom: 10px;
+    flex-direction: column;
+    &::-webkit-scrollbar {
+      width: 0px;
+      height: 0px;
+    }
+
+    .link-input-cover {
+      width: 100%;
+      min-height: 12px;
+      border-radius: 8px;
+      height: max-content;
+      padding: 8px 12px 4px;
+      background: $blur-bg;
+      &[data-active="true"] {
+        border: 1px solid var(--alt-color);
+      }
+    }
+
+    textarea:not(.description-text) {
+      width: 100%;
+      border: none;
+      resize: none;
+      height: auto;
+      outline: none;
+      padding: 0px;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 22px;
+      word-break: break-all;
+      color: var(--primary-color);
+      background: inherit;
+    }
+
+    .bookmarks__item__contents {
+      gap: 10px;
+      display: flex;
+      position: relative;
+      flex-direction: column;
+      padding: 4px 0px 8px;
+
+      .media {
+        flex: none;
+        width: 100%;
+        height: 56px;
+        display: flex;
+        margin-top: 4px;
+        overflow: hidden;
+        align-items: center;
+        border-radius: 6px;
+        @extend %column-middle;
+        border: 1px solid #ccc;
+        justify-content: center;
+        svg {
+          width: 20px;
+        }
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+      .details {
+        gap: 4px;
+        flex: 1;
+        width: 100%;
+        margin-top: 6px;
+        display: flex;
+        font-weight: 500;
+        flex-direction: column;
+        .title {
+          @extend %select;
+          display: block;
+          font-size: 14px;
+          max-height: 42px;
+          font-weight: 600;
+          overflow: hidden;
+          line-height: 19px;
+          margin-bottom: 4px;
+          padding-bottom: 4px;
+          display: -webkit-box;
+          word-break: break-all;
+          -webkit-line-clamp: 2;
+          text-overflow: ellipsis;
+          color: var(--primary-color);
+          -webkit-box-orient: vertical;
+          border-bottom: 1px solid var(--interactive);
+        }
+
+        .title-text,
+        .description-text {
+          margin-top: 10px;
+          width: 100%;
+          border: none;
+          resize: none;
+          height: auto;
+          outline: none;
+          font-size: 13px;
+          font-weight: 470;
+          padding: 12px 12px;
+          line-height: 22px;
+          border-radius: 8px;
+          margin-bottom: 4px;
+          background: #f7f7f7;
+          color: var(--primary-color);
+        }
+
+        .description {
+          display: block;
+          font-size: 12px;
+          overflow: hidden;
+          line-height: 16px;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          text-overflow: ellipsis;
+          color: var(--body-text);
+          max-height: calc(16px * 3);
+          -webkit-box-orient: vertical;
+        }
+
+        .reminder-category {
+          display: flex;
+          flex-direction: column;
+
+          div,
+          button {
+            display: flex;
+          }
+          .menu-container {
+            width: 100%;
+            display: flex;
+            padding: 10px 0px !important;
+            color: var(--inactive);
+            flex-direction: column;
+            border-radius: 8px !important;
+            background-color: #f4f4f4;
+            &::-webkit-scrollbar {
+              width: 0px;
+              height: 0px;
+            }
+            .filter-input {
+              padding: 9px 12px;
+              input {
+                width: 100%;
+                padding: 10px;
+                border-radius: 6px;
+                background: #e1e1e1;
+              }
+            }
+            .menu-item {
+              gap: 12px;
+              font-size: 14px;
+              @extend %row-center;
+              color: var(--body-text);
+              padding: 9px 16px;
+              svg {
+                width: 18px;
+                height: 18px;
+                fill: var(--body-text);
+              }
+            }
+          }
+
+          button {
+            display: flex;
+            font-size: 14px;
+            margin-top: 10px;
+            padding: 10px 12px;
+            background: #f7f7f7;
+            border-radius: 8px;
+            flex-direction: row;
+            align-items: center;
+            color: var(--inactive);
+            justify-content: space-between;
+          }
+          .selected-items {
+            display: flex;
+            gap: 5px 8px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+            flex-direction: row;
+            li {
+              gap: 4px;
+              height: 22px;
+              display: flex;
+              cursor: pointer;
+              font-size: 12px;
+              padding: 2px 12px;
+              font-weight: 500;
+              align-items: center;
+              border-radius: 12px;
+              flex-direction: row;
+              color: var(--category-text);
+              background: var(--category-bg);
+            }
+          }
+        }
+
+        .reminder-config {
+          display: flex;
+          margin-top: 8px;
+          flex-direction: column;
+          .label {
+            gap: 4px;
+            display: flex;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 8px;
+            flex-direction: row;
+            align-items: center;
+            padding: 0px 6px 8px;
+            color: var(--primary-color);
+            justify-content: space-between;
+            border-bottom: 1px solid #f2f2f2;
+            svg {
+              width: 8px;
+            }
+          }
+        }
+
+        .reminder-block {
+          overflow: hidden;
+          flex-direction: column;
+          animation: 1.5s itemsAccordion;
+
+          padding: 0px 12px;
+          border-radius: 8px;
+          background: #f7f7f7;
+
+          &[data-open="true"] {
+            overflow: visible;
+          }
+          .remind-in {
+            width: 100%;
+            display: flex;
+            height: 44px;
+            /* padding: 0px 12px; */
+            /* border-radius: 8px; */
+            position: relative;
+            align-items: center;
+            background: #f7f7f7;
+            flex-direction: row;
+            justify-content: space-between;
+            &.tab {
+              border-top: 1px solid #ccc;
+            }
+            &-title {
+              gap: 10px;
+              display: flex;
+              font-size: 14px;
+              flex-direction: row;
+              align-items: center;
+              color: var(--alt-color);
+              svg {
+                width: 15px;
+                height: 15px;
+                fill: var(--alt-color);
+              }
+            }
+            &-btn {
+              gap: 10px;
+              display: flex;
+              height: 28px;
+              cursor: pointer;
+              font-size: 12px;
+              padding: 0px 8px;
+              border-radius: 6px;
+              background: #fff;
+              flex-direction: row;
+              align-items: center;
+              p {
+                font-weight: 500;
+                color: var(--interactive);
+              }
+              svg {
+                margin-top: 2px;
+              }
+            }
+          }
+
+          @keyframes itemsAccordion {
+            0% {
+              overflow: hidden;
+            }
+            99% {
+              overflow: visible;
+            }
+            100% {
+              overflow: visible;
+            }
+          }
+        }
+
+        .repeat-options {
+          width: 100%;
+          display: flex;
+          margin-top: 8px;
+          padding: 0px 12px;
+          border-radius: 8px;
+          background: $blur-bg;
+          flex-direction: column;
+          position: relative;
+
+          .option {
+            width: 100%;
+            display: flex;
+            font-size: 14px;
+            padding: 8px 0px;
+            align-items: center;
+            flex-direction: row;
+            color: var(--alt-color);
+            justify-content: space-between;
+            svg {
+              width: 15px;
+              height: 15px;
+              margin-top: 1px;
+              fill: var(--alt-color);
+              &.repeat {
+                width: 12px;
+                height: 12px;
+              }
+            }
+            &-title {
+              gap: 10px;
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+            }
+
+            .option-select {
+              gap: 6px;
+              height: 32px;
+              padding: 4px 8px;
+              display: flex;
+              font-size: 12px;
+              font-weight: 500;
+              border-radius: 6px;
+              align-items: center;
+              flex-direction: row;
+              background: #ffffff;
+              color: var(--interactive);
+              text-transform: capitalize;
+            }
+          }
+        }
+      }
+    }
+
+    .action-btns {
+      gap: 14px;
+      display: flex;
+      margin-top: 12px;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      button {
+        display: flex;
+      }
+    }
+
+    .create-bookmark {
+      flex: 1;
+      @extend %action-btn;
+      background: #ced5da;
+      color: var(--inactive);
+      &[data-active="true"] {
+        color: #fff;
+        background: var(--primary-color);
+      }
+    }
+
+    .share-bookmark {
+      flex: 1;
+      gap: 10px;
+      @extend %action-btn;
+      background: #f7f7f7;
+      color: var(--alt-color);
+      flex-direction: row;
+      align-items: center;
+      p {
+        font-weight: 500;
+      }
+      svg {
+        fill: var(--alt-color);
+      }
+    }
+  }
+}

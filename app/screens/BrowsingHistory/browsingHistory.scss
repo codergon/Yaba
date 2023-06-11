@@ -1,0 +1,154 @@
+@import "../../styles/core/partials";
+
+.spaced-row {
+  @extend %row-spaced-center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.history {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  padding-top: 5px;
+  flex-direction: column;
+
+  div,
+  button {
+    display: flex;
+  }
+
+  &__header {
+    height: 56px;
+    display: flex;
+    padding: 0 24px;
+    font-size: 16px;
+    font-weight: 500;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__list {
+    flex: 1;
+    display: flex;
+    padding: 0 0px;
+    flex-direction: column;
+    &-group {
+      width: 100%;
+      flex-direction: column;
+      &__header {
+        top: 0;
+        left: 0;
+        margin: 0 20px;
+        font-size: 11.5px;
+        position: sticky;
+        padding: 8px 0px;
+        color: var(--inactive);
+        text-transform: uppercase;
+        background: var(--bg-color);
+        border-bottom: 1px solid #e8e8e8;
+        // color: var(--category-text);
+      }
+
+      &:nth-child(1) {
+        .history__list-group__header {
+          margin-top: 0px;
+        }
+      }
+    }
+
+    &-items {
+      width: 100%;
+      margin-top: 4px;
+      padding-bottom: 10px;
+      flex-direction: column;
+    }
+  }
+
+  &-item {
+    gap: 10px;
+    width: 100%;
+    display: flex;
+    cursor: default;
+    min-height: 20px;
+    padding: 8px 20px;
+    border-radius: 4px;
+
+    &:hover {
+      background: #fffbef;
+    }
+
+    .favicon-noOfVisits {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .favicon {
+      @extend %row-middle;
+      flex: none;
+      width: 22px;
+      height: 22px;
+      padding: 3px;
+      margin-top: 2px;
+      overflow: hidden;
+      border-radius: 30px;
+      background: #f2f2f2;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 100%;
+      }
+    }
+    .noOfVisits {
+      gap: 4px;
+      flex: none;
+      display: flex;
+      line-height: 1;
+      font-size: 9px;
+      font-weight: 500;
+      // margin-left: 8px;
+      margin-top: -5px;
+      padding: 1px 4px;
+      background: #fff;
+      border-radius: 4px;
+      color: var(--inactive);
+      border: 1px solid #e2e2e2;
+    }
+
+    .info {
+      flex: 1;
+      gap: 3px;
+      flex-direction: column;
+    }
+
+    .title-menu {
+      gap: 6px;
+      overflow: visible;
+      align-items: flex-start;
+
+      .menu-btn {
+        cursor: pointer;
+      }
+    }
+
+    .item-link {
+      color: var(--inactive);
+      text-decoration: none;
+      font-size: 11.5px;
+    }
+
+    .title {
+      width: 100%;
+      line-height: 1.3;
+      font-size: 13px;
+      color: var(--primary-color);
+    }
+
+    .time {
+      font-size: 10.5px;
+      color: var(--inactive);
+    }
+  }
+}

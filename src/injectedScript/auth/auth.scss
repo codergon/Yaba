@@ -1,0 +1,120 @@
+$grey: #999;
+$white: #fff;
+$font-sans: Suisse, sans-serif;
+
+.yaba-auth {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  background: $white;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  font-family: $font-sans;
+
+  $primary-color: #777;
+  $main-bg-color: #fff;
+  $button-bg-color: #fff;
+  $secondary-color: #000;
+  $main-border-color: #ccc;
+  $button-hover-bg-color: #f7fafe;
+
+  &-container {
+    gap: 18px;
+    width: 340px;
+    display: flex;
+    max-width: 90vw;
+    max-height: 90vh;
+    align-items: center;
+    border-radius: 20px;
+    flex-direction: column;
+    padding: 28px 24px 28px;
+    justify-content: center;
+    box-sizing: border-box;
+    background-color: $main-bg-color;
+    border: 1px solid $main-border-color;
+    * {
+      box-sizing: border-box;
+    }
+    p,
+    h1 {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  }
+
+  &__descrption {
+    width: 100%;
+    display: flex;
+    margin-bottom: 6px;
+    flex-direction: column;
+    p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: $primary-color;
+    }
+  }
+
+  &__header {
+    gap: 14px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    &-logo {
+      width: 47px;
+      height: 47px;
+      overflow: hidden;
+      border-radius: 100%;
+      svg {
+        width: 100% !important;
+        height: 100% !important;
+      }
+    }
+    &-text {
+      gap: 2px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      h1 {
+        font-size: 20px;
+        color: $secondary-color;
+      }
+      p {
+        font-size: 14px;
+        color: $primary-color;
+      }
+    }
+  }
+
+  &-signin-btn {
+    gap: 20px;
+    width: 100%;
+    height: 42px;
+    border: none;
+    outline: none;
+    display: flex;
+    max-width: 100%;
+    cursor: pointer;
+    padding: 0px 14px;
+    border-radius: 7px;
+    align-items: center;
+    flex-direction: row;
+    letter-spacing: 0.25px;
+    color: $secondary-color;
+    justify-content: center;
+    font-size: 14px !important;
+    background-color: $button-bg-color;
+    transition: background-color 0.218s;
+    border: 1px solid $main-border-color;
+    -webkit-transition: background-color 0.218s;
+    &:hover {
+      background-color: $button-hover-bg-color;
+    }
+    svg {
+      width: 18px;
+      height: 18px;
+      margin-left: -38px !important;
+    }
+  }
+}

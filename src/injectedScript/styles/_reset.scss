@@ -1,0 +1,91 @@
+%reset {
+  --bg-color: #fff;
+  --inactive: #929292;
+  --alt-color: #556b7e;
+  --body-text: #445665;
+  --text-color: #5d5d5d;
+  --interactive: #067bc2;
+  --reminder-bg: #f1e6fe;
+  --category-bg: #e6f2f9;
+  --divider-color: #d1d1d1;
+  --primary-color: #0c2b47;
+  --reminder-text: #6f04f8;
+  --category-text: #067bc2;
+
+  --comment-text: #666;
+  --comment-title: #333;
+  --comment-alt: #8c8c8c;
+
+  $font-sans: Suisse, sans-serif;
+  // $font-sans: Satoshi, sans-serif;
+
+  font-weight: 400;
+  font-family: $font-sans !important;
+
+  a,
+  input {
+    border: none !important;
+    outline: 0 !important;
+    color: inherit !important;
+    background: transparent;
+    &:focus {
+      border: none !important;
+      outline: 0 !important;
+    }
+  }
+
+  button {
+    border: none !important;
+    outline: 0 !important;
+    color: inherit;
+    background: transparent;
+    &:focus {
+      border: none !important;
+      outline: 0 !important;
+    }
+  }
+
+  a {
+    text-decoration: none !important;
+  }
+
+  body,
+  input {
+    padding: 0px !important;
+  }
+
+  p {
+    padding: 0px !important;
+    margin: 0px !important;
+  }
+  * {
+    // margin: 0px !important;
+    // padding: 0px !important;
+
+    box-sizing: border-box !important;
+
+    &::before,
+    &::after {
+      box-sizing: border-box !important;
+    }
+  }
+
+  ul {
+    margin: 0px !important;
+  }
+
+  button {
+    cursor: pointer !important;
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+  }
+
+  /* Firefox */
+  input[type="number"] {
+    appearance: textfield !important;
+    -moz-appearance: textfield !important;
+  }
+}

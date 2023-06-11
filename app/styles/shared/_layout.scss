@@ -1,0 +1,128 @@
+.ext-loader {
+  gap: 4px;
+  width: 100%;
+  height: 600px;
+  display: flex;
+  padding: 0px 20px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  svg {
+    width: 60px;
+    height: 60px;
+  }
+  p {
+    font-size: 48px;
+    font-weight: 596;
+    color: var(--primary-color);
+    font-family: "Author", sans-serif;
+  }
+}
+
+.ext-header {
+  width: 100%;
+  height: 32px;
+  margin-top: 18px;
+  align-items: center;
+  flex-direction: row;
+  padding: 0px 20px 10px;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  &[data-underline="true"] {
+    border-bottom: none;
+  }
+  div,
+  button {
+    display: flex;
+  }
+  button {
+    width: 18px;
+    height: 18px;
+    svg {
+      width: 100%;
+      height: 100%;
+      fill: var(--body-text);
+    }
+    &.back-btn {
+      width: 19px;
+      height: 19px;
+    }
+  }
+  .screen-label {
+    gap: 6px;
+    display: flex;
+    font-size: 19px;
+    font-weight: 700;
+    flex-direction: row;
+    align-items: center;
+    letter-spacing: 0.2px;
+    color: var(--primary-color);
+
+    .user {
+      flex-direction: column;
+      .sub {
+        font-size: 12px;
+        color: var(--body-text);
+      }
+    }
+  }
+  .screen-title {
+    font-size: 16px;
+    font-weight: 700;
+    // margin-left: 18px;
+    color: var(--primary-color);
+    &.no-margin {
+      margin-left: 0px;
+    }
+  }
+  .action-btns {
+    gap: 18px;
+    min-width: 19px;
+    button svg {
+      width: 16px;
+      width: 16px;
+    }
+  }
+}
+
+.ext-navbar {
+  flex: none;
+  z-index: 99;
+  width: 100%;
+  height: 49px;
+  display: flex;
+  padding-top: 6px;
+  flex-direction: row;
+  color: var(--inactive);
+  background: var(--bg-color);
+  border-top: 1px solid #eee;
+  justify-content: space-around;
+
+  button {
+    padding: 8px;
+
+    &[data-active="true"] {
+      color: var(--primary-color);
+    }
+  }
+}
+
+.static-btn {
+  width: 40px;
+  right: 20px;
+  bottom: 74px;
+  height: 40px;
+  display: flex;
+  color: #fff;
+  font-size: 20px;
+  position: absolute;
+  border-radius: 100%;
+  @extend %column-middle;
+  background: var(--interactive);
+  svg {
+    width: 16px;
+    height: 16px;
+    fill: #fff;
+  }
+}
