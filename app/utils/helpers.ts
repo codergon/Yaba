@@ -1,16 +1,16 @@
-const SERVER_URL = "https://yaba.onrender.com";
+const SERVER_URL: string = "https://yaba.onrender.com";
 
-var tester =
+const tester: RegExp =
   /^[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
 
-export const doubleDigit = val =>
-  Number(val) >= 10 ? Number(val) : "0" + Number(val);
+export const doubleDigit = (val: number): number | string =>
+  val >= 10 ? val : "0" + val;
 
-const isToday = activeDate =>
+const isToday = (activeDate: Date): boolean =>
   activeDate.getDate() === new Date().getDate() &&
   activeDate.getMonth() === new Date().getMonth();
 
-const isValidUrl = urlString => {
+const isValidUrl = (urlString: string): boolean => {
   try {
     return Boolean(new URL(urlString));
   } catch (e) {
@@ -19,22 +19,22 @@ const isValidUrl = urlString => {
 };
 
 export const EmailValidator = {
-  validate(email) {
+  validate(email: string): boolean {
     if (!email) return false;
 
-    var emailParts = email.split("@");
+    const emailParts = email.split("@");
 
     if (emailParts.length !== 2) return false;
 
-    var account = emailParts[0];
-    var address = emailParts[1];
+    const account = emailParts[0];
+    const address = emailParts[1];
 
     if (account.length > 64) return false;
     else if (address.length > 255) return false;
 
-    var domainParts = address.split(".");
+    const domainParts = address.split(".");
     if (
-      domainParts.some(function (part) {
+      domainParts.some((part: string) => {
         return part.length > 63;
       })
     )
@@ -46,28 +46,27 @@ export const EmailValidator = {
   },
 };
 
-// wrapper function, on V3 manifest storage has promises
-function storageSet(obj = {}) {
+function storageSet(obj: { [key: string]: any } = {}): Promise<void> {
   return new Promise((resolve, reject) => {
-    var storageObj = {};
+    const storageObj: { [key: string]: any } = {};
     for (let u = 0; u < Object.keys(obj).length; u++) {
       const key = Object.keys(obj)[u];
       const objectToStore = obj[key];
       var jsonstr = JSON.stringify(objectToStore);
-      var i = 0;
+      let i = 0;
 
       while (jsonstr.length > 0) {
-        var index = key + "USEDTOSEPERATE" + i++;
+        const index = key + "USEDTOSEPERATE" + i++;
 
         const maxLength =
           chrome.storage.sync.QUOTA_BYTES_PER_ITEM - index.length - 2;
-        var valueLength = jsonstr.length;
+        let valueLength = jsonstr.length;
         if (valueLength > maxLength) {
           valueLength = maxLength;
         }
 
-        var segment = jsonstr.substring(0, valueLength);
-        var jsonLength = JSON.stringify(segment).length;
+        let segment = jsonstr.substring(0, valueLength);
+        let jsonLength = JSON.stringify(segment).length;
         segment = jsonstr.substring(
           0,
           (valueLength = valueLength - (jsonLength - maxLength) - 1)
@@ -91,18 +90,21 @@ function storageSet(obj = {}) {
   });
 }
 
-function storageGet(uniqueKeys = []) {
+function storageGet(
+  uniqueKeys: string[] = []
+): Promise<{ [key: string]: any }> {
   return new Promise((resolve, reject) => {
     chrome.storage.sync.get(null).then(data => {
       const keyArr = Object.keys(data).filter(
-        e => uniqueKeys.filter(j => e.indexOf(j) == 0).length > 0
+        (e: string) =>
+          uniqueKeys.filter((j: string) => e.indexOf(j) == 0).length > 0
       );
       chrome.storage.sync.get(keyArr).then(items => {
-        var results = {};
+        const results: { [key: string]: any } = {};
         for (let i = 0; i < uniqueKeys.length; i++) {
           const uniqueKey = uniqueKeys[i];
           const keysFiltered = keyArr.filter(
-            e => e.split("USEDTOSEPERATE")[0] == uniqueKey
+            (e: string) => e.split("USEDTOSEPERATE")[0] == uniqueKey
           );
           if (keysFiltered.length > 0) {
             results[uniqueKey] = "";
@@ -118,8 +120,8 @@ function storageGet(uniqueKeys = []) {
   });
 }
 
-const numToWords = numba => {
-  var ones = [
+const numToWords = (numba: number): string => {
+  const ones: string[] = [
     "",
     "one",
     "two",
@@ -131,7 +133,7 @@ const numToWords = numba => {
     "eight",
     "nine",
   ];
-  var tens = [
+  const tens: string[] = [
     "",
     "",
     "twenty",
@@ -143,7 +145,7 @@ const numToWords = numba => {
     "eighty",
     "ninety",
   ];
-  var teens = [
+  const teens: string[] = [
     "ten",
     "eleven",
     "twelve",
@@ -156,7 +158,7 @@ const numToWords = numba => {
     "nineteen",
   ];
 
-  function convert_millions(num) {
+  function convert_millions(num: number): string {
     if (num >= 1000000) {
       return (
         convert_millions(Math.floor(num / 1000000)) +
@@ -168,7 +170,7 @@ const numToWords = numba => {
     }
   }
 
-  function convert_thousands(num) {
+  function convert_thousands(num: number): string {
     if (num >= 1000) {
       return (
         convert_hundreds(Math.floor(num / 1000)) +
@@ -180,7 +182,7 @@ const numToWords = numba => {
     }
   }
 
-  function convert_hundreds(num) {
+  function convert_hundreds(num: number): string {
     if (num > 99) {
       return (
         ones[Math.floor(num / 100)] + " hundred " + convert_tens(num % 100)
@@ -190,7 +192,7 @@ const numToWords = numba => {
     }
   }
 
-  function convert_tens(num) {
+  function convert_tens(num: number): string {
     if (num < 10) return ones[num];
     else if (num >= 10 && num < 20) return teens[num - 10];
     else {

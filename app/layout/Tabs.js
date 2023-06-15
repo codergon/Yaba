@@ -2,11 +2,11 @@ import Navbar from "./Navbar";
 import StaticButton from "./StaticButton";
 import Settings from "../screens/Settings";
 import Bookmarks from "../screens/Bookmarks";
-import Notifications from "../screens/Notifications";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   UserState,
   spaceItems,
+  unreadState,
   spacesError,
   spacesLoading,
   activeTabState,
@@ -19,8 +19,13 @@ import { db } from "../fb";
 import BrowsingHistory from "../screens/BrowsingHistory";
 
 const Tabs = () => {
-  const [activeTab, setActiveTab] = useRecoilState(activeTabState);
+  const user = useRecoilValue(UserState);
+  const setError = useSetRecoilState(spacesError);
+  const setUnread = useSetRecoilState(unreadState);
+  const setLoading = useSetRecoilState(spacesLoading);
+  const [spaces, setSpaces] = useRecoilState(spaceItems);
   const activeControl = useRecoilValue(activeControlState);
+  const [activeTab, setActiveTab] = useRecoilState(activeTabState);
 
   const tabsControls = [
     {
@@ -28,7 +33,7 @@ const Tabs = () => {
       component: <Bookmarks />,
     },
     {
-      title: "notifications",
+      title: "history",
       component: <BrowsingHistory />,
     },
     {
@@ -36,11 +41,6 @@ const Tabs = () => {
       component: <Settings />,
     },
   ];
-
-  const user = useRecoilValue(UserState);
-  const setError = useSetRecoilState(spacesError);
-  const setLoading = useSetRecoilState(spacesLoading);
-  const [spaces, setSpaces] = useRecoilState(spaceItems);
 
   const FetchSpaces = async () => {
     setLoading(true);
@@ -62,6 +62,16 @@ const Tabs = () => {
       setLoading(false);
     }
   };
+
+  const markUnread = async () => {
+    await chrome.storage.sync.set({ unread: 0 });
+    setUnread(false);
+    chrome.action.setBadgeText({ text: "" });
+  };
+
+  useEffect(() => {
+    markUnread();
+  }, []);
 
   useEffect(() => {
     if (!user?.uid) return;

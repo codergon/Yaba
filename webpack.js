@@ -15,22 +15,20 @@ module.exports = (env, argv) => {
     },
     entry: {
       app: path.join(__dirname, "./src/popup/index.js"),
-      foreground: path.join(__dirname, "./src/injectedScript/index.js"),
+      foreground: path.resolve("src/injectedScript/index.tsx"),
     },
     output: {
       publicPath: "/",
       filename: "[name].js",
       path: path.resolve(__dirname, "./build"),
     },
-    resolve: {
-      extensions: ["*", ".ts", ".tsx", ".js", ".jsx", ".css", ".scss"],
-    },
+
     optimization: { concatenateModules: true },
     module: {
       rules: [
         {
           use: "ts-loader",
-          test: /\.tsx?$/,
+          test: /\.(ts|tsx)$/,
           exclude: /node_modules/,
         },
         {
@@ -119,6 +117,7 @@ module.exports = (env, argv) => {
       new CleanWebpackPlugin(),
     ],
     resolve: {
+      extensions: [".tsx", ".ts", ".js"],
       fallback: {
         crypto: require.resolve("crypto-browserify"),
         stream: require.resolve("stream-browserify"),

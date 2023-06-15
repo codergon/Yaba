@@ -95,7 +95,7 @@ const Workspace = () => {
             spaceArr?.length === 0
               ? spaceListInitial?.length === 0
                 ? "You are not a member of any workspace Create a new workspace to get started"
-                : "Your search did not match any workspaces"
+                : "Your search did not match any workspace"
               : "Error fetching spaces"
           }
           description={error}

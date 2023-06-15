@@ -8,19 +8,24 @@ const EmptyState = ({
   emptyList,
   isLoading,
   noMatch,
+  noVector,
 }) => {
   return (
     <div className="empty-state-container">
-      {emptyList ? (
-        <Illustration.EmptyList size={140} />
-      ) : noMatch ? (
-        <Illustration.NoMatch size={140} />
-      ) : isLoading ? (
-        <Illustration.EmptySpace size={150} />
-      ) : isError ? (
-        <Illustration.Connectivity size={130} />
-      ) : (
-        <SpinnerCircular size={30} color="#777" secondaryColor="#ccc" />
+      {!noVector && (
+        <>
+          {emptyList ? (
+            <Illustration.EmptyList size={140} />
+          ) : noMatch ? (
+            <Illustration.NoMatch size={140} />
+          ) : isLoading ? (
+            <Illustration.EmptySpace size={150} />
+          ) : isError ? (
+            <Illustration.Connectivity size={130} />
+          ) : (
+            <SpinnerCircular size={30} color="#777" secondaryColor="#ccc" />
+          )}
+        </>
       )}
 
       {title && <p className="title">{title}</p>}

@@ -9,23 +9,24 @@
   },
   "commands": {
     "_execute_action": {
+      "description": "Open extension",
       "suggested_key": {
         "default": "Ctrl+E",
         "mac": "Command+E"
       }
     },
-    "full-screen": {
-      "description": "Open extension in fullscreen",
+    "bookmark-tab": {
+      "description": "Bookmark the current tab",
       "suggested_key": {
         "default": "Ctrl+U",
         "mac": "Command+U"
       }
     },
-    "inject-markers": {
-      "description": "Toggle page markers",
+    "toggle-notes": {
+      "description": "Toggle notes visibility",
       "suggested_key": {
-        "default": "Ctrl+M",
-        "mac": "Command+M"
+        "default": "Ctrl+B",
+        "mac": "Command+B"
       }
     }
   },
@@ -82,10 +83,13 @@
       "matches": ["http://*/*", "https://*/*"],
       "resources": [
         "gsi-client.js",
-        "SuisseIntl-Book.woff",
+        "images/Lamp.svg",
+        "images/Torso.svg",
         "Satoshi-Variable.ttf",
+        "SuisseIntl-Book.woff",
         "styles/foreground.css",
-        "images/placeholder.png"
+        "images/placeholder.png",
+        "NeueMontreal-Medium.woff2"
       ]
     }
   ]

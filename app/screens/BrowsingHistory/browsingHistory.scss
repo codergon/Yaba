@@ -6,11 +6,48 @@
   overflow: hidden;
 }
 
+.history-filters {
+  width: 100%;
+  z-index: 60;
+  display: flex;
+  margin-top: 0px;
+  padding: 0px 20px;
+  margin-bottom: 3px;
+  flex-direction: row;
+
+  &__content {
+    width: 100%;
+    gap: 7px 6px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding-bottom: 5px;
+  }
+
+  .checklist-item {
+    gap: 4px;
+    display: flex;
+    color: #fff;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 500;
+    border-radius: 10px;
+    flex-direction: row;
+    align-items: center;
+    height: max-content;
+    padding: 2.5px 8px 3px;
+    background: var(--category-text);
+    p {
+      letter-spacing: 0.2px;
+    }
+  }
+}
+
 .history {
   flex: 1;
   width: 100%;
   display: flex;
-  padding-top: 5px;
+  padding-top: 0px;
   flex-direction: column;
 
   div,

@@ -1,16 +1,17 @@
 import dayjs from "dayjs";
 import { useRecoilState } from "recoil";
 import { useRef, useState } from "react";
-import Icons from "../../../app/common/Icons";
-import { reminderDataState } from "../atoms/foreState";
-import { useClickOut } from "../../../app/hooks/useClickOut";
-import { bookmarksDataState } from "../../../app/atoms/appState";
-import ReminderModal from "../../../app/screens/SetBookmark/ReminderModal";
-import { getReminderTimer } from "../../../app/screens/SetBookmark/helpers";
+import Icons from "../../components/Icons";
+import { useClickOut } from "../../utils/useClickOut";
+import { getReminderTimer } from "../../utils/helpers";
+import { reminderDataState } from "../../atoms/foreState";
+import { bookmarksDataState } from "../../../../app/atoms/appState";
+// @ts-ignore
+import ReminderModal from "../../../../app/screens/SetBookmark/ReminderModal";
 
 const getPlaceholder = () => chrome.runtime.getURL("images/placeholder.png");
 
-const AppToast = ({ item, duration }) => {
+const AppToast = ({ item }: any) => {
   const [imgLoaded, setImgLoaded] = useState(false);
   const [dateVal, setDateVal] = useState(new Date());
   const [openSnooze, setOpenSnooze] = useState(false);
@@ -31,7 +32,7 @@ const AppToast = ({ item, duration }) => {
     closeToast();
     window.open(item?.link, "_blank");
   };
-  const doubleDigit = val =>
+  const doubleDigit = (val: number) =>
     Number(val) >= 10 ? Number(val) : "0" + Number(val);
 
   const isToday = (activeDate = dateVal) =>
@@ -39,7 +40,7 @@ const AppToast = ({ item, duration }) => {
     activeDate.getMonth() === new Date().getMonth();
 
   const closeToast = async () => {
-    const newList = remData.filter(i => i.id !== item.id);
+    const newList = remData.filter((i: any) => i.id !== item.id);
 
     await chrome.runtime.sendMessage(
       { type: "dismiss-toast", item },
@@ -54,7 +55,7 @@ const AppToast = ({ item, duration }) => {
 
   const snoozeReminder = async () => {
     const dateCheck = new Date();
-    const newList = bookmarksData.map(rem => {
+    const newList = bookmarksData.map((rem: any) => {
       if (rem.id === item?.id) {
         return {
           ...rem,
@@ -76,7 +77,7 @@ const AppToast = ({ item, duration }) => {
     closeToast();
   };
 
-  const onRemindInChange = option => {
+  const onRemindInChange = (option: string) => {
     if (option === "custom") {
       setRemindIn(option);
       return;
@@ -87,7 +88,7 @@ const AppToast = ({ item, duration }) => {
     setOpenRemTab(false);
   };
 
-  const onSetCustom = dateVal => {
+  const onSetCustom = (dateVal: Date) => {
     setDateVal(dateVal);
     onRemindInChange("custom");
     setOpenRemTab(false);

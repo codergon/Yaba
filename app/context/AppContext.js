@@ -7,6 +7,8 @@ import { getDomainFromURL } from "../screens/BrowsingHistory/services/helper";
 
 export const AppContext = createContext({
   checklist: [],
+  noMatch: false,
+  useDate: false,
   searchValue: "",
   historyItems: [],
   groupedHistory: {},
@@ -21,6 +23,7 @@ export const AppContext = createContext({
   setOpenFilters: () => {},
   setSearchValue: () => {},
   setOrderByVisits: () => {},
+  removeFromChecklist: () => {},
   addBookmark: () => Promise.resolve(),
   queryHistory: () => Promise.resolve(),
   deleteHistory: () => Promise.resolve(),
@@ -31,6 +34,7 @@ const DEFAULT_MAX_RESULTS = 3000;
 export default function AppProvider({ children }) {
   const navigate = useNavigate();
 
+  const [useDate, setUseDate] = useState(false);
   const [checklist, setChecklist] = useState([]);
   const [toDate, setToDate] = useState(new Date());
   const [searchValue, setSearchValue] = useState("");
@@ -44,6 +48,8 @@ export default function AppProvider({ children }) {
   const [bookmarks, setBookmarks] = useRecoilState(bookmarksDataState);
 
   const queryChrome = async (useDate = false) => {
+    setUseDate(useDate);
+
     const endTime = toDate.getTime() + 86400000;
 
     const query = {
@@ -75,6 +81,9 @@ export default function AppProvider({ children }) {
   }, [maxResults]);
 
   // Functions
+  const removeFromChecklist = url =>
+    setChecklist(p => p.filter(c => c !== url));
+
   const addBookmark = async ({
     link,
     title,
@@ -149,10 +158,19 @@ export default function AppProvider({ children }) {
     return groupedData;
   }, [searchValue, historyItems, checklist]);
 
+  const noMatch = useMemo(() => {
+    return (
+      Object.keys(groupedHistory).length === 0 &&
+      groupedHistory.constructor === Object
+    );
+  }, [groupedHistory]);
+
   return (
     <AppContext.Provider
       value={{
         toDate,
+        noMatch,
+        useDate,
         fromDate,
         checklist,
         searchValue,
@@ -169,6 +187,7 @@ export default function AppProvider({ children }) {
         setOpenFilters,
         setSearchValue,
         setOrderByVisits,
+        removeFromChecklist,
         queryHistory: queryChrome,
       }}
     >

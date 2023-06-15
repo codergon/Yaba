@@ -81,7 +81,7 @@ const Bookmark = ({}) => {
         emptyList={bkmks?.length === 0}
         title={
           bkmks?.length > 0
-            ? "No bookmarks were found related to your search keywords"
+            ? "No bookmark found related to your search keywords"
             : "Click on the button below to add bookmarks and set reminders"
         }
       />

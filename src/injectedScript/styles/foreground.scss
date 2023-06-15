@@ -1,7 +1,13 @@
 @import "./reset";
+
 @import "../../../app/styles/core/partials";
 @import "../../../app/styles/components/appmodal";
 @import "../../../app/styles/components/react-menu";
+
+html,
+body {
+  margin: 0px !important;
+}
 
 @font-face {
   font-family: "Satoshi";
@@ -21,11 +27,11 @@
 .yaba-toast-container {
   $blur-bg: #f7f7f7;
 
+  right: 0px;
   gap: 10px !important;
-  top: 20px !important;
-  right: 24px !important;
   display: flex !important;
   position: fixed !important;
+  align-items: flex-end !important;
   flex-direction: column !important;
   z-index: 9999999 * 999999 !important;
 
@@ -80,11 +86,14 @@
     flex-direction: column !important;
     padding: 8px 12px 12px !important;
     border: 1px solid #eeee !important;
-    max-width: calc(100vw - 48px) !important;
     font-family: "Satoshi", sans-serif, "Helvetica Neue", Helvetica, Arial,
       "Lucida Grande", sans-serif !important;
     box-shadow: 0 -1px 17px rgb(0 0 0 / 13%), 0 1px 17px rgb(0 0 0 / 13%),
       0 0.6px 2px rgb(0 0 0 / 10%), 0 -0.6px 2px rgb(0 0 0 / 10%) !important;
+
+    &.auto-width {
+      width: auto !important;
+    }
 
     @extend %reset;
 

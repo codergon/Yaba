@@ -4,6 +4,9 @@
   overflow-y: scroll;
   flex-direction: column;
   height: calc(600px - 32px);
+  &.no-overflow {
+    overflow: hidden;
+  }
 
   &__configs {
     top: 0;
@@ -131,7 +134,7 @@
     .base-tabs__controls {
       z-index: 1;
       flex: none;
-      height: 36px;
+      height: 38px;
       padding: 3px;
       position: relative;
       border-radius: 8px;
@@ -148,7 +151,7 @@
       .active-highlight {
         left: 3px;
         background: #fff;
-        border-radius: 6px;
+        border-radius: 7px;
         position: absolute;
         transition: left 0.3s;
         width: calc(50% - 3px);

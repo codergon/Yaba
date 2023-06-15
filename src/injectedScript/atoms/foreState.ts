@@ -1,9 +1,9 @@
-import { atom, selector } from "recoil";
 import { getURL } from "../utils/helpers";
+import { atom, selector, AtomEffect } from "recoil";
 
 const localStorageEffect =
-  key =>
-  async ({ onSet }) => {
+  <T>(key: string): AtomEffect<T> =>
+  ({ onSet }) => {
     onSet(async newValue => {
       let obj = { [key]: newValue };
       await chrome.storage.sync.set(obj);
@@ -12,33 +12,33 @@ const localStorageEffect =
 
 // =========================================
 
-export const reminderDataState = atom({
+export const reminderDataState = atom<any[]>({
   key: "remsArray",
   default: [],
 });
 
-export const showMarkerState = atom({
+export const showMarkerState = atom<boolean>({
   key: "showMarker",
   default: false,
 });
 
-export const currentActionState = atom({
+export const currentActionState = atom<string>({
   key: "currentAction",
   default: "none",
 });
 
-export const markerPositionState = atom({
+export const markerPositionState = atom<{ top: number; left: number }>({
   key: "markerPosition",
   default: { top: 0, left: 0 },
 });
 
-export const pageMarkersObj = atom({
+export const pageMarkersObj = atom<{ [key: string]: any }>({
   key: "pageMarkers",
   default: {},
-  effects: [localStorageEffect("pageMarkers")],
+  effects_UNSTABLE: [localStorageEffect("pageMarkers")],
 });
 
-export const currMarkersObj = selector({
+export const currMarkersObj = selector<any[]>({
   key: "currMarkers",
   get: ({ get }) => {
     const url = getURL();

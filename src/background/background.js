@@ -7,20 +7,53 @@ try {
 }
 
 chrome.commands.onCommand.addListener(async command => {
-  if (command === "inject-markers") {
+  if (command === "toggle-notes") {
     const tabId = await getCurrentTab();
+    !isNaN(tabId) && chrome.tabs.sendMessage(tabId, { cmd: "toggle-notes" });
+  }
 
-    !!tabId &&
-      !isNaN(tabId) &&
-      chrome.tabs.sendMessage(tabId, { cmd: "show-markers" });
+  if (command === "bookmark-tab") {
+    const dateVal = new Date();
+    const tab = await getCurrentTab(true);
+
+    const response = await chrome.tabs.sendMessage(tab?.id, {
+      type: "getMeta",
+    });
+
+    const { meta, og, twitter } = response;
+
+    const newBookmark = {
+      expired: true,
+      paused: false,
+      shared: false,
+      link: tab?.url,
+      sharedWith: [],
+      categories: [],
+      repeat: "never",
+      autoTrigger: false,
+      id: crypto.randomUUID(),
+      date: Number(dateVal.getTime()),
+      title: meta?.title || twitter?.title || og?.title || tab?.title,
+      thumbnail: og?.image || twitter?.image || tab?.favIconUrl,
+      description: meta?.description || og?.description || twitter?.description,
+    };
+
+    const { bookmarksArr } = await storageGet(["bookmarksArr"]);
+
+    if (Array.isArray(bookmarksArr))
+      await storageSet({
+        bookmarksArr: [newBookmark, ...bookmarksArr],
+      });
+
+    !isNaN(tab?.id) &&
+      (await chrome.tabs.sendMessage(tab?.id, {
+        cmd: "bookmark-tab",
+      }));
   }
 
   if (command === "full-screen") {
     const tabId = await getCurrentTab();
-
-    !!tabId &&
-      !isNaN(tabId) &&
-      chrome.tabs.sendMessage(tabId, { cmd: "full-screen" });
+    !isNaN(tabId) && chrome.tabs.sendMessage(tabId, { cmd: "full-screen" });
   }
 });
 

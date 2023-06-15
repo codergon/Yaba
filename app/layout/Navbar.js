@@ -22,21 +22,21 @@ const Navbar = ({ activeTab, setActiveTab }) => {
         data-active={activeTab === "bookmarks"}
         onClick={e => setActiveTab("bookmarks")}
       >
-        <BookmarkMinus size={19} />
+        <BookmarkMinus size={20} />
       </button>
 
       <button
-        data-active={activeTab === "notifications"}
-        onClick={e => setActiveTab("notifications")}
+        data-active={activeTab === "history"}
+        onClick={e => setActiveTab("history")}
       >
-        <History size={18.5} />
+        <History size={20} />
       </button>
 
       <button
         data-active={activeTab === "settings"}
         onClick={e => setActiveTab("settings")}
       >
-        <Settings size={19} />
+        <Settings size={20} />
       </button>
     </div>
   );

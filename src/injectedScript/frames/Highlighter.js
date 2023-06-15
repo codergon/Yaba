@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
+import { useEffect, useState } from "react";
 
 const Highlighter = () => {
   const [comments, setComments] = useState([]);
