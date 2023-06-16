@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { SpinnerCircular } from "spinners-react";
 import Vectors from "../../../../common/Vectors";
 import { UserState } from "../../../../atoms/appState";
-import { EmailValidator, storageGet } from "../../../../utils/helpers";
+import { EmailValidator } from "../../../../utils/helpers";
 
 const AddParticipants = ({ spaceId, members, closeModal }) => {
   const [error, setError] = useState("");
@@ -36,7 +36,7 @@ const AddParticipants = ({ spaceId, members, closeModal }) => {
 
   useEffect(() => {
     const validateAcct = async () => {
-      const { userContacts } = await storageGet(["userContacts"]);
+      const { userContacts } = await chrome.storage.local.get(["userContacts"]);
       if (Array.isArray(userContacts)) setContactList(userContacts);
     };
     validateAcct();

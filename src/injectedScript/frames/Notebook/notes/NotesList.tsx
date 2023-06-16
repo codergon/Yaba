@@ -92,7 +92,7 @@ const NotesList = () => {
           })}
         </div>
       ) : (
-        <Emptystate />
+        <Emptystate imageIndex={0} />
       )}
     </>
   );

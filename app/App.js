@@ -33,7 +33,7 @@ const App = () => {
   const setBookmarksData = useSetRecoilState(bookmarksDataState);
 
   const checkUnread = async () => {
-    const { unread } = await chrome.storage.sync.get("unread");
+    const { unread } = await chrome.storage.local.get("unread");
     setUnread(!isNaN(unread) ? !!(unread > 0) : false);
   };
 

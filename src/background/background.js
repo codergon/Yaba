@@ -38,10 +38,10 @@ chrome.commands.onCommand.addListener(async command => {
       description: meta?.description || og?.description || twitter?.description,
     };
 
-    const { bookmarksArr } = await storageGet(["bookmarksArr"]);
+    const { bookmarksArr } = await chrome.storage.local.get(["bookmarksArr"]);
 
     if (Array.isArray(bookmarksArr))
-      await storageSet({
+      await chrome.storage.local.set({
         bookmarksArr: [newBookmark, ...bookmarksArr],
       });
 
@@ -59,7 +59,7 @@ chrome.commands.onCommand.addListener(async command => {
 
 const dismissToast = async (sendResponse, item) => {
   if (item?.toastType !== "welcome") {
-    const { notifications } = await storageGet(["notifications"]);
+    const { notifications } = await chrome.storage.local.get(["notifications"]);
     const { unread } = await chrome.storage.sync.get(["unread"]);
 
     let notiCount = !isNaN(unread) ? unread : 0;
@@ -68,7 +68,7 @@ const dismissToast = async (sendResponse, item) => {
       : [];
     notiCount = notiCount - 1;
 
-    await storageSet({
+    await chrome.storage.local.set({
       notifications: newNotifications.filter(r => r.id !== item?.id),
     });
     await chrome.storage.sync.set({ unread: notiCount > 0 ? notiCount : 0 });

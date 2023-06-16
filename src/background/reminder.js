@@ -51,7 +51,7 @@ const nextTime = (repeat, former) => {
 };
 
 chrome.alarms.onAlarm.addListener(async () => {
-  const { bookmarksArr, notifications } = await storageGet([
+  const { bookmarksArr, notifications } = await chrome.storage.local.get([
     "bookmarksArr",
     "notifications",
   ]);
@@ -120,7 +120,7 @@ chrome.alarms.onAlarm.addListener(async () => {
       )
     : [];
 
-  await storageSet({
+  await chrome.storage.local.set({
     bookmarksArr: updatedList,
     notifications: newNotifications,
   });

@@ -1,6 +1,6 @@
 import { Check } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
+import { useEffect, useRef, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { TaskType, useNotebook } from "../components/NotebookProvider";
 
@@ -32,7 +32,7 @@ const ActiveTask = ({
   const editTask = async () => {
     await updateTask(task?.id, text);
     setEdit(false);
-    setShowNew("top");
+    setShowNew(text === task.content ? "" : "top");
   };
 
   useEffect(() => {

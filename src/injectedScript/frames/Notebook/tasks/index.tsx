@@ -1,18 +1,20 @@
 import dayjs from "dayjs";
 import Task from "./Task";
 import NewTask from "./NewTask";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { Trash2 } from "lucide-react";
 import ActiveTasks from "./ActiveTasks";
 import NewButton from "../components/NewButton";
 import Emptystate from "../components/emptystate";
 import { useNotebook } from "../components/NotebookProvider";
+import EditableTask from "./EditableTask";
 
 const Tasks = () => {
   const [showNew, setShowNew] = useState("");
   const [isSelect, setIsSelect] = useState(false);
   const [selected, setSelected] = useState<any[]>([]);
-  const { tasks, activeTasks, deleteTasks, completedTasks } = useNotebook();
+  const { tasks, lastIndex, activeTasks, deleteTasks, completedTasks } =
+    useNotebook();
 
   return (
     <div className="yaba-notebook__tasks">
@@ -80,15 +82,27 @@ const Tasks = () => {
       {tasks?.length > 0 || !!showNew ? (
         <>
           <div className="yaba-notebook__tasks--list">
-            <ActiveTasks
-              {...{
-                isSelect,
-                selected,
-                setSelected,
-                setShowNew,
-                showNew,
-              }}
-            />
+            {activeTasks.map((task, index) => {
+              return (
+                <Fragment key={task.id}>
+                  {lastIndex === 0 && index === 0 && !!showNew && (
+                    <NewTask setShowNew={setShowNew} />
+                  )}
+
+                  <EditableTask
+                    task={task}
+                    isSelect={isSelect}
+                    selected={selected}
+                    setShowNew={setShowNew}
+                    setSelected={setSelected}
+                  />
+
+                  {lastIndex - 1 === index && !!showNew && (
+                    <NewTask setShowNew={setShowNew} />
+                  )}
+                </Fragment>
+              );
+            })}
 
             {activeTasks?.length === 0 && !!showNew && (
               <NewTask setShowNew={setShowNew} />
@@ -115,7 +129,7 @@ const Tasks = () => {
           </div>
         </>
       ) : (
-        <Emptystate isTasks />
+        <Emptystate isTasks imageIndex={1} />
       )}
     </div>
   );

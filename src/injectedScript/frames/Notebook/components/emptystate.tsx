@@ -1,4 +1,7 @@
-const Emptystate = ({ isTasks = false }) => {
+const Emptystate = ({
+  isTasks = false,
+  imageIndex = Math.floor(Math.random() * 2),
+}) => {
   const emptystates = [
     {
       title: `Connect with your ideas! ${
@@ -13,12 +16,11 @@ const Emptystate = ({ isTasks = false }) => {
       image: chrome.runtime.getURL("images/Lamp.svg"),
     },
   ];
-  const randomIndex = Math.floor(Math.random() * emptystates.length);
 
   return (
     <div className="yaba-notebook__notes--emptystate">
-      <img src={emptystates[randomIndex].image} alt="Notes" />
-      <p>{emptystates[randomIndex].title}</p>
+      <img src={emptystates[imageIndex].image} alt="Notes" />
+      <p>{emptystates[imageIndex].title}</p>
     </div>
   );
 };

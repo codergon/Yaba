@@ -2,6 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { EditorLink, findLinkEntities } from "../utils/editor";
 import { CompositeDecorator, EditorState, convertToRaw } from "draft-js";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  notebookNotesState,
+  notebookTasksState,
+} from "../../../atoms/foreState";
+import { useRecoilState } from "recoil";
 
 export interface NoteType {
   id: string;
@@ -70,17 +75,23 @@ const decorator = new CompositeDecorator([
 
 export default function NotebookProvider({ children }: NotebookProviderProps) {
   const navigation = useNavigate();
-  const [tasks, setTasks] = useState<TaskType[]>([]);
-  const [notes, setNotes] = useState<NoteType[]>([]);
+  const [notes, setNotes] = useRecoilState(notebookNotesState);
+  const [tasks, setTasks] = useRecoilState(notebookTasksState);
 
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty(decorator)
   );
 
-  const setup = async () => {};
+  const setup = async () => {
+    const { notebookNotes, notebookTasks } = await chrome.storage.local.get([
+      "notebookNotes",
+      "notebookTasks",
+    ]);
+    setNotes(notebookNotes || []);
+    setTasks(notebookTasks || []);
+  };
 
   useEffect(() => {
-    setup();
     const handleVisibilityChange = async () => {
       if (document.visibilityState === "visible") {
         await setup();

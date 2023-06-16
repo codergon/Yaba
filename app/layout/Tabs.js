@@ -64,7 +64,7 @@ const Tabs = () => {
   };
 
   const markUnread = async () => {
-    await chrome.storage.sync.set({ unread: 0 });
+    await chrome.storage.local.set({ unread: 0 });
     setUnread(false);
     chrome.action.setBadgeText({ text: "" });
   };

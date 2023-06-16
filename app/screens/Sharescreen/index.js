@@ -4,10 +4,8 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import Compose from "./Compose";
-import Icons from "../../common/Icons";
 import UserContacts from "./UserContacts";
 import ShareOptions from "./ShareOptions";
-import { storageGet } from "../../utils/helpers";
 import ComposeHeader from "./components/ComposeHeader";
 import ContactsHeader from "./components/ContactsHeader";
 import { Bookmark, LinkSimpleHorizontal } from "phosphor-react";
@@ -21,7 +19,7 @@ const ShareScreen = () => {
 
   useEffect(() => {
     const validateAcct = async () => {
-      const { userContacts } = await storageGet(["userContacts"]);
+      const { userContacts } = await chrome.storage.local.get(["userContacts"]);
       if (Array.isArray(userContacts)) setContactList(userContacts);
     };
     validateAcct();

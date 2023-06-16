@@ -1,7 +1,6 @@
 import { db } from "../../fb";
 import { createSlice } from "@reduxjs/toolkit";
 import { doc, setDoc } from "firebase/firestore";
-import { storageSet } from "../../utils/helpers";
 
 import { EncodeStr } from "../../utils/chrome";
 
@@ -16,7 +15,7 @@ export const userSlice = createSlice({
   reducers: {
     setUserData: (state, action) => {
       state.user = action.payload;
-      storageSet({ user: action.payload });
+      chrome.storage.local.set({ user: action.payload });
     },
 
     setIsPending: (state, action) => {
@@ -38,8 +37,8 @@ export const AuthSignIn = (userData, userContacts) => async dispatch => {
   await setDoc(doc(db, "users", data.uid), data);
 
   await chrome.storage.sync.set({ userId });
-  await storageSet({ user: data });
-  if (userContacts) await storageSet({ userContacts });
+  await chrome.storage.local.set({ user: data });
+  if (userContacts) await chrome.storage.local.set({ userContacts });
 
   window.close();
 };

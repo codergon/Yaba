@@ -1,34 +1,23 @@
 import _ from "lodash";
 import dayjs from "dayjs";
 import { AtomEffect, atom, selector } from "recoil";
-import { storageGet, storageSet } from "../utils/helpers";
 
 const storageEffect =
-  <T>(key: string, defaultVal?: any): AtomEffect<T> =>
-  ({ onSet, setSelf }) => {
-    onSet(async newValue => {
-      let obj = { [key]: newValue };
-      await chrome.storage.sync.set(obj);
-
-      setSelf((await chrome.storage.sync.get(key))[key] || defaultVal);
-    });
-  };
-
-const JsonStorageEffect =
   <T>(key: string, defaultVal?: any): AtomEffect<T> =>
   // @ts-ignore
   async ({ onSet, setSelf }) => {
     onSet(async newValue => {
       let obj = { [key]: newValue };
-      await chrome.storage.sync.set(obj);
+      await chrome.storage.local.set(obj);
     });
 
-    setSelf((await storageGet([key]))[key] || defaultVal);
+    setSelf((await chrome.storage.local.get(key))[key] || defaultVal);
   };
+
 export const UserState = atom<string>({
   default: "",
   key: "user",
-  effects: [JsonStorageEffect("user")],
+  effects: [storageEffect("user")],
 });
 
 export const userIdState = atom<string>({
@@ -56,13 +45,13 @@ export const prefsState = atom<{
 }>({
   key: "prefs",
   default: { isFixed: false, cmdOpen: false, cmdMark: false },
-  effects: [JsonStorageEffect("prefs")],
+  effects: [storageEffect("prefs")],
 });
 
 export const categoriesDataState = atom<string[]>({
   default: [],
   key: "categories",
-  effects: [JsonStorageEffect("categories", [])],
+  effects: [storageEffect("categories", [])],
 });
 
 export const activeTabState = atom<string>({
@@ -79,13 +68,13 @@ export const activeControlState = atom<string>({
 export const bookmarksDataState = atom<any[]>({
   key: "bookmarksArr",
   default: [],
-  effects: [JsonStorageEffect("bookmarksArr")],
+  effects: [storageEffect("bookmarksArr")],
 });
 
 export const spaceTimestampState = atom<number | null>({
   key: "spaceTimestamp",
   default: null,
-  effects: [JsonStorageEffect("spaceTimestamp", null)],
+  effects: [storageEffect("spaceTimestamp", null)],
 });
 
 export const getScreenState = atom<any>({
@@ -94,7 +83,7 @@ export const getScreenState = atom<any>({
   effects: [
     // @ts-ignore
     async ({ setSelf }) => {
-      setSelf((await storageGet(["bookmarksArr"]))["bookmarksArr"]);
+      setSelf((await chrome.storage.local.get("bookmarksArr"))["bookmarksArr"]);
     },
   ],
 });
@@ -220,7 +209,7 @@ export const activeNotifTabState = atom<string>({
 export const notifDataState = atom<any[]>({
   key: "notifications",
   default: [],
-  effects: [JsonStorageEffect("notifications")],
+  effects: [storageEffect("notifications")],
 });
 
 export const groupNotifState = atom<string>({

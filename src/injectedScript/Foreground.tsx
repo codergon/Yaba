@@ -1,7 +1,7 @@
-import { useState } from "react";
 import Toasts from "./frames/Toasts";
 import { useRecoilState } from "recoil";
 import Notebook from "./frames/Notebook";
+import { useEffect, useState } from "react";
 import { reminderDataState } from "./atoms/foreState";
 
 interface ForegroundProps {
@@ -46,32 +46,34 @@ const Foreground: React.FC<ForegroundProps> = ({
     setRemData(newList);
   };
 
-  chrome.runtime.onMessage.addListener(async (req, sdr, sendRes) => {
-    if (req.cmd === "close-all-toasts") {
-      await closeToast(null, true);
-      return true;
-    }
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener(async (req, sdr, sendRes) => {
+      if (req.cmd === "close-all-toasts") {
+        await closeToast(null, true);
+        return true;
+      }
 
-    if (req.cmd === "toastify" && req?.item) {
-      await processItems(req?.item);
-      return true;
-    }
+      if (req.cmd === "toastify" && req?.item) {
+        await processItems(req?.item);
+        return true;
+      }
 
-    if (req.cmd === "close-toast" && req?.item) {
-      await closeToast(req.item);
-      return true;
-    }
+      if (req.cmd === "close-toast" && req?.item) {
+        await closeToast(req.item);
+        return true;
+      }
 
-    if (req.cmd === "toggle-notes") {
-      isNotes && setShowNotes(p => !p);
-      return true;
-    }
+      if (req.cmd === "toggle-notes") {
+        isNotes && setShowNotes(p => !p);
+        return true;
+      }
 
-    if (req.cmd === "bookmark-tab") {
-      toggleNotification();
-      return true;
-    }
-  });
+      if (req.cmd === "bookmark-tab") {
+        toggleNotification();
+        return true;
+      }
+    });
+  }, []);
 
   return !isNotes ? (
     <Toasts

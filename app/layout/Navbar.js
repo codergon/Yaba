@@ -8,7 +8,7 @@ const Navbar = ({ activeTab, setActiveTab }) => {
   const [unread, setUnread] = useRecoilState(unreadState);
 
   const checkUnread = async () => {
-    const { unread } = await chrome.storage.sync.get("unread");
+    const { unread } = await chrome.storage.local.get("unread");
     setUnread(!isNaN(unread) ? !!(unread > 0) : false);
   };
 
