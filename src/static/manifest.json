@@ -1,4 +1,14 @@
 {
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "name": "Yaba - Reminders, Workspaces & More",
+  "description": "Set reminders, create bookmarks, collaborate through your workspaces, and more.",
+  "icons": {
+    "128": "icons/icon128.png",
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png"
+  },
+
   "action": {
     "default_popup": "index.html",
     "default_icon": "icons/icon128.png",
@@ -23,7 +33,7 @@
       }
     },
     "toggle-notes": {
-      "description": "Toggle notes visibility",
+      "description": "Toggle Noteboon visibility",
       "suggested_key": {
         "default": "Ctrl+B",
         "mac": "Command+B"
@@ -37,52 +47,22 @@
       "matches": ["http://*/*", "https://*/*"]
     }
   ],
-  "description": "Set reminders, bookmark your favorite pages, collaborate through your workspaces, and more.",
-  "host_permissions": [
-    "\u003Call_urls>",
-    "http://*/",
-    "https://*/",
-    "https://www.googleapis.com/",
-    "https://oauth2.googleapis.com/"
-  ],
-  "icons": {
-    "128": "icons/icon128.png",
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png"
-  },
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzz74Lu4JnPIJHlKILdbi/loHd7AjhYLuDVKm2lS2gJPOxxLLq3CS545ZMS5SYuZcYsi1oO7LHQgqIaukWLDKjN7Z8qihMwgK1hiF/C5TM/Jtmsk31BB+NQhfR6Qjryrpqn60QT5sI0Ih5hAuhA+h02Y2zFCbaUtKW5XO2G0Y3loCSsdj7oKEA5cGuemOB17a9K3d3hU9Kz5AQH7wkBmd6nXAmqKcYqvXLOofmd0qDHcT3EMVvbOKEgK95OH/02oPCzafUHOgwM0rEUjvMR3tNQtFOt+y0HvPntoRH6ItcyMAVX7YBMGX1bJlC08uwkX+kjADwgeIzosutGsbvKW/tQIDAQAB",
-  "manifest_version": 3,
-  "name": "Yaba - Reminders, bookmarks, workspaces and more",
-  "oauth2": {
-    "client_id": "410458758559-t4paj8767ftlpi12pa4i91m5rb42n1gm.apps.googleusercontent.com",
-    "scopes": [
-      "openid",
-      "https://www.googleapis.com/auth/contacts",
-      "https://www.googleapis.com/auth/userinfo.email",
-      "https://www.googleapis.com/auth/userinfo.profile",
-      "https://www.googleapis.com/auth/contacts.readonly",
-      "https://www.googleapis.com/auth/profile.emails.read",
-      "https://www.googleapis.com/auth/contacts.other.readonly"
-    ]
-  },
+
+  "host_permissions": ["<all_urls>", "http://*/", "https://*/"],
   "permissions": [
     "tabs",
     "alarms",
     "storage",
     "history",
-    "identity",
     "bookmarks",
     "scripting",
     "activeTab",
     "unlimitedStorage"
   ],
-  "update_url": "https://clients2.google.com/service/update2/crx",
-  "version": "1.0.4",
   "web_accessible_resources": [
     {
       "matches": ["http://*/*", "https://*/*"],
       "resources": [
-        "gsi-client.js",
         "images/Lamp.svg",
         "images/Torso.svg",
         "Satoshi-Variable.ttf",
