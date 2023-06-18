@@ -1,42 +1,20 @@
 import "./settings.scss";
+import { useRecoilState } from "recoil";
+import { useRef, useState } from "react";
 import Header from "../../layout/Header";
 import Vectors from "../../common/Vectors";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import {
-  prefsState,
-  isLoggedInState,
-  userIdState,
-  UserState,
-  categoriesDataState,
-} from "../../atoms/appState";
 import Categories from "../SetBookmark/Categories";
-import { useRef, useState } from "react";
 import { useClickOut } from "../../hooks/useClickOut";
-import { useSelector } from "react-redux";
+import { ChevronDown, ExternalLink } from "lucide-react";
+import { UserState, categoriesDataState } from "../../atoms/appState";
 
 const Settings = () => {
-  const userId = useRecoilValue(userIdState);
-  const [prefs, setPrefs] = useRecoilState(prefsState);
-  const setIsLoggedIn = useSetRecoilState(isLoggedInState);
   const [user, setUser] = useRecoilState(UserState);
 
-  const handleClick = async () => {
-    await chrome.runtime.sendMessage({ type: "logout" }).then(response => {
-      setIsLoggedIn(false);
-      setUser(null);
-    });
-  };
-
-  const toggleSwitch = option => {
-    if (option === "fixed-btn") {
-      setPrefs({ ...prefs, isFixed: !prefs?.isFixed });
-    }
-    if (option === "cmd-open") {
-      setPrefs({ ...prefs, cmdOpen: !prefs?.cmdOpen });
-    }
-    if (option === "cmd-mark") {
-      setPrefs({ ...prefs, cmdMark: !prefs?.cmdMark });
-    }
+  const signOut = async () => {
+    setUser(null);
+    await chrome.storage.local.remove("userContacts");
+    await chrome.runtime.sendMessage({ type: "refresh-pages-auth" });
   };
 
   // DELETE CATEGORIES
@@ -86,7 +64,7 @@ const Settings = () => {
                     <div className="main">
                       <p>{user?.name || "Yaba share Id"}</p>
                     </div>
-                    <p className="sub">{user?.email || userId}</p>
+                    <p className="sub">{user?.email}</p>
                   </div>
                 </div>
               </div>
@@ -94,45 +72,41 @@ const Settings = () => {
           </div>
 
           <div className="preferences">
-            {/* <p className="label">Preferences</p> */}
-
-            {categoriesData?.length > 0 && (
-              <div className="category">
-                <div className="category-header">
-                  <p className="title">Configs</p>
-                </div>
-                <ul>
+            <div className="category">
+              <div className="category-header">
+                <p className="title">Options</p>
+              </div>
+              <ul>
+                {categoriesData?.length > 0 && (
                   <li
                     onClick={() => setOpenCategories(true)}
                     style={{ cursor: "pointer" }}
                   >
                     <div className="item-key">
-                      <p className="main">Delete categories</p>
+                      <p className="main">Delete Categories</p>
                     </div>
+                    <ChevronDown size={13} strokeWidth={3} />
                   </li>
-                </ul>
-              </div>
-            )}
+                )}
 
-            {/* <div className="category">
-              <div className="category-header">
-                <p className="title">Accessibility</p>
-              </div>
-              <ul>
                 <li>
                   <div className="item-key">
-                    <p className="main">Show Yaba button on pages</p>
+                    <p className="main">Privacy Policy</p>
                   </div>
                   <button
-                    className="base-switch"
-                    data-move={prefs?.isFixed}
-                    onClick={() => toggleSwitch("fixed-btn")}
+                    className="external-link"
+                    onClick={() =>
+                      window.open(
+                        "https://getyaba-privacy.netlify.app",
+                        "_blank"
+                      )
+                    }
                   >
-                    <div className="base-switch-toggle" />
+                    <ExternalLink size={13} strokeWidth={3} />
                   </button>
                 </li>
               </ul>
-            </div> */}
+            </div>
 
             <div className="category">
               <div className="category-header">
@@ -141,43 +115,28 @@ const Settings = () => {
               <ul>
                 <li>
                   <div className="item-key">
-                    <p className="main colored">⌘E</p>
-                    <p className="sub">Open browser extension</p>
+                    <p className="main colored">⌘ / Ctrl + E </p>
+                    <p className="sub">Open Yaba extension</p>
                   </div>
-
-                  {/* <button
-                    className="base-switch"
-                    data-move={prefs?.cmdOpen}
-                    onClick={() => toggleSwitch("cmd-open")}
-                  >
-                    <div className="base-switch-toggle" />
-                  </button> */}
                 </li>
 
-                {/* <li>
+                <li>
                   <div className="item-key">
-                    <p className="main colored">⌘M</p>
-                    <p className="sub">Annotate and share pages</p>
-                  </div> */}
-
-                {/* <button
-                    className="base-switch"
-                    data-move={prefs?.cmdMark}
-                    onClick={() => toggleSwitch("cmd-mark")}
-                  >
-                    <div className="base-switch-toggle" />
-                  </button> */}
-                {/* </li> */}
-
-                {/* <li>
-                  <div className="item-key">
-                    <p className="main colored">⌘U</p>
-                    <p className="sub">Open extension in fullscreen</p>
+                    <p className="main colored">⌘ / Ctrl + B</p>
+                    <p className="sub">
+                      Toggle <span>Notebook</span> visibility
+                    </p>
                   </div>
-                </li> */}
+                </li>
+                <li>
+                  <div className="item-key">
+                    <p className="main colored">⌘ / Ctrl + U</p>
+                    <p className="sub">Bookmark the current tab</p>
+                  </div>
+                </li>
               </ul>
 
-              <button className="sign-out" onClick={handleClick}>
+              <button className="sign-out" onClick={signOut}>
                 <p className="main">Sign out</p>
               </button>
             </div>

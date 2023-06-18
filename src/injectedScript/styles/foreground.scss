@@ -53,7 +53,7 @@ body {
     }
 
     &-toggle {
-      left: 1px !important;
+      left: 3px !important;
       width: 18px !important;
       height: 18px !important;
       position: absolute !important;
@@ -84,9 +84,9 @@ body {
     position: relative !important;
 
     flex-direction: column !important;
-    padding: 8px 12px 12px !important;
+    padding: 8px 12px 10px !important;
     border: 1px solid #eeee !important;
-    font-family: "Satoshi", sans-serif, "Helvetica Neue", Helvetica, Arial,
+    font-family: "Suisse", sans-serif, "Helvetica Neue", Helvetica, Arial,
       "Lucida Grande", sans-serif !important;
     box-shadow: 0 -1px 17px rgb(0 0 0 / 13%), 0 1px 17px rgb(0 0 0 / 13%),
       0 0.6px 2px rgb(0 0 0 / 10%), 0 -0.6px 2px rgb(0 0 0 / 10%) !important;
@@ -99,7 +99,8 @@ body {
 
     * {
       font-weight: 450;
-      font-family: "Satoshi" !important;
+      letter-spacing: 0.15px;
+      font-family: "Suisse" !important;
       box-sizing: border-box !important;
     }
 
@@ -147,7 +148,7 @@ body {
             abbr {
               font-weight: 500 !important;
               color: #687296 !important;
-              font-family: "Satoshi", sans-serif !important;
+              font-family: "Suisse", sans-serif !important;
             }
           }
         }
@@ -177,7 +178,7 @@ body {
             abbr {
               font-weight: 500 !important;
               color: #687296 !important;
-              font-family: "Satoshi", sans-serif !important;
+              font-family: "Suisse", sans-serif !important;
             }
             &--neighboringMonth {
               abbr {
@@ -207,7 +208,7 @@ body {
         flex-direction: row !important;
         justify-content: space-between !important;
         &-block {
-          gap: 9px !important;
+          gap: 4px !important;
           display: flex !important;
           align-items: center !important;
           flex-direction: row !important;
@@ -218,9 +219,7 @@ body {
             margin-top: 2px !important;
           }
           svg {
-            width: 22px !important;
-            height: 22px !important;
-            border-radius: 8px !important;
+            margin-top: 1px !important;
           }
         }
         &-time {
@@ -277,7 +276,7 @@ body {
         }
 
         &__content {
-          gap: 10px !important;
+          gap: 5px !important;
           flex: none !important;
           width: 100% !important;
           display: flex !important;
@@ -292,11 +291,11 @@ body {
             max-height: 38px !important;
             display: block !important;
             font-size: 14px !important;
-            font-weight: 600 !important;
+            font-weight: 500 !important;
             overflow: hidden !important;
             line-height: 18px !important;
             display: -webkit-box !important;
-            -webkit-line-clamp: 2 !important;
+            -webkit-line-clamp: 1 !important;
             text-overflow: ellipsis !important;
             color: var(--primary-color) !important;
             -webkit-box-orient: vertical !important;
@@ -360,7 +359,7 @@ body {
         .yaba-toast__reminder-config {
           display: flex !important;
           overflow: hidden !important;
-          margin-top: 24px !important;
+          margin-top: 18px !important;
           margin-bottom: 4px !important;
           flex-direction: column !important;
           justify-content: flex-end !important;

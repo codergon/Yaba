@@ -53,7 +53,7 @@ const NewTask = ({ setShowNew }: NewTaskProps) => {
             minRows={1}
             value={text}
             ref={inputRef}
-            placeholder="Create as task..."
+            placeholder="Add a task..."
             className="text-area"
             onKeyDown={e => {
               if (e.key === "Enter") {

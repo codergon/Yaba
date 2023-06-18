@@ -1,3 +1,5 @@
+chrome.alarms.create({ periodInMinutes: 0.12 });
+
 async function getCurrentTab(isTab = false) {
   let queryOptions = { active: true, lastFocusedWindow: true };
   let [tab] = await chrome.tabs.query(queryOptions);
@@ -55,7 +57,7 @@ chrome.alarms.onAlarm.addListener(async () => {
     "bookmarksArr",
     "notifications",
   ]);
-  const { unread } = await chrome.storage.sync.get(["unread"]);
+  const { unread } = await chrome.storage.local.get(["unread"]);
 
   let notiCount = !isNaN(unread) ? unread : 0;
   let newNotifications = Array.isArray(notifications) ? [...notifications] : [];
@@ -70,7 +72,7 @@ chrome.alarms.onAlarm.addListener(async () => {
             if (!item?.autoTrigger) {
               // increment the number of unread notifications
               notiCount++;
-              await chrome.storage.sync.set({
+              await chrome.storage.local.set({
                 unread: notiCount > 0 ? notiCount : 0,
               });
 
@@ -125,33 +127,17 @@ chrome.alarms.onAlarm.addListener(async () => {
     notifications: newNotifications,
   });
 
-  const tab = await getCurrentTab(true);
-  isValidUrl(tab?.url) &&
-    chrome.runtime.sendMessage(
-      {
-        cmd: "refetch",
-        updatedList,
-        newNotifications,
-      },
-      function (response) {
-        var error = chrome.runtime.lastError;
-        if (error) return;
-      }
-    );
-
-  isValidUrl(tab?.url) &&
-    chrome.tabs.sendMessage(
-      tab?.id,
-      {
-        cmd: "refetch",
-        updatedList,
-        newNotifications,
-      },
-      function (response) {
-        var error = chrome.runtime.lastError;
-        if (error) return;
-      }
-    );
+  chrome.runtime.sendMessage(
+    {
+      cmd: "refetch",
+      updatedList,
+      newNotifications,
+    },
+    function (response) {
+      var error = chrome.runtime.lastError;
+      if (error) return;
+    }
+  );
 
   if (notiCount) {
     chrome.action.setBadgeText({ text: (notiCount > 0 ? notiCount : "") + "" });

@@ -15,6 +15,7 @@ const Foreground: React.FC<ForegroundProps> = ({
   setFrameWidth,
   setFrameHeight,
 }) => {
+  const [user, setUser] = useState(null);
   const [showNotes, setShowNotes] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [remData, setRemData] = useRecoilState(reminderDataState);
@@ -46,7 +47,18 @@ const Foreground: React.FC<ForegroundProps> = ({
     setRemData(newList);
   };
 
+  const verifyAuth = async () => {
+    const { user } = await chrome.storage.local.get("user");
+    if (!user?.uid) {
+      setUser(null);
+      return;
+    }
+    setUser(user);
+  };
+
   useEffect(() => {
+    verifyAuth();
+
     chrome.runtime.onMessage.addListener(async (req, sdr, sendRes) => {
       if (req.cmd === "close-all-toasts") {
         await closeToast(null, true);
@@ -72,25 +84,34 @@ const Foreground: React.FC<ForegroundProps> = ({
         toggleNotification();
         return true;
       }
+
+      if (req.cmd === "refresh-pages-auth") {
+        verifyAuth();
+        return true;
+      }
     });
   }, []);
 
-  return !isNotes ? (
-    <Toasts
-      setFrameWidth={setFrameWidth}
-      setFrameHeight={setFrameHeight}
-      showNotification={showNotification}
-    />
-  ) : (
+  return !!user ? (
     <>
-      {showNotes && (
-        <Notebook
+      {!isNotes ? (
+        <Toasts
           setFrameWidth={setFrameWidth}
           setFrameHeight={setFrameHeight}
+          showNotification={showNotification}
         />
+      ) : (
+        <>
+          {showNotes && (
+            <Notebook
+              setFrameWidth={setFrameWidth}
+              setFrameHeight={setFrameHeight}
+            />
+          )}
+        </>
       )}
     </>
-  );
+  ) : null;
 };
 
 export default Foreground;

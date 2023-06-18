@@ -14,22 +14,25 @@ const storageEffect =
     setSelf((await chrome.storage.local.get(key))[key] || defaultVal);
   };
 
-export const UserState = atom<string>({
-  default: "",
+const storageEffectNoSetup =
+  <T>(key: string): AtomEffect<T> =>
+  // @ts-ignore
+  async ({ onSet }) => {
+    onSet(async newValue => {
+      let obj = { [key]: newValue };
+      await chrome.storage.local.set(obj);
+    });
+  };
+
+export const UserState = atom<{
+  uid: string;
+  name: any;
+  email: any;
+  photoURL: any;
+} | null>({
+  default: null,
   key: "user",
-  effects: [storageEffect("user")],
-});
-
-export const userIdState = atom<string>({
-  key: "userId",
-  default: "",
-  effects: [storageEffect("userId")],
-});
-
-export const isLoggedInState = atom<boolean>({
-  key: "isLoggedIn",
-  default: false,
-  effects: [storageEffect("isLoggedIn")],
+  effects: [storageEffectNoSetup("user")],
 });
 
 export const fullScreenState = atom<boolean>({
@@ -62,7 +65,6 @@ export const activeTabState = atom<string>({
 export const activeControlState = atom<string>({
   key: "activeControl",
   default: "bookmarks",
-  // default: "workspace",
 });
 
 export const bookmarksDataState = atom<any[]>({

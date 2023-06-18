@@ -1,8 +1,9 @@
 import dayjs from "dayjs";
+import { Timer } from "phosphor-react";
 import { useRecoilState } from "recoil";
 import { useRef, useState } from "react";
 import Icons from "../../components/Icons";
-import { useClickOut } from "../../utils/useClickOut";
+import { useClickOut } from "../../hooks/useClickOut";
 import { getReminderTimer } from "../../utils/helpers";
 import { reminderDataState } from "../../atoms/foreState";
 import { bookmarksDataState } from "../../../../app/atoms/appState";
@@ -32,8 +33,6 @@ const AppToast = ({ item }: any) => {
     closeToast();
     window.open(item?.link, "_blank");
   };
-  const doubleDigit = (val: number) =>
-    Number(val) >= 10 ? Number(val) : "0" + Number(val);
 
   const isToday = (activeDate = dateVal) =>
     activeDate.getDate() === new Date().getDate() &&
@@ -42,7 +41,7 @@ const AppToast = ({ item }: any) => {
   const closeToast = async () => {
     const newList = remData.filter((i: any) => i.id !== item.id);
 
-    await chrome.runtime.sendMessage(
+    chrome.runtime.sendMessage(
       { type: "dismiss-toast", item },
       function (response) {
         var error = chrome.runtime.lastError;
@@ -117,10 +116,12 @@ const AppToast = ({ item }: any) => {
 
       <div className="yaba-toast__header">
         <div className="yaba-toast__header-block">
-          <Icons.logoSm />
+          <Timer size={14.4} weight="bold" />
           <p>Reminder</p>
         </div>
-        <div className="yaba-toast__header-time">now</div>
+        <div className="yaba-toast__header-time">
+          {dayjs(item?.date).format("h:mm A")}
+        </div>
       </div>
 
       <div className="yaba-toast__link-details">
@@ -159,7 +160,13 @@ const AppToast = ({ item }: any) => {
                 <button
                   className="yaba-toast__snooze-btn"
                   onClick={e => {
-                    setOpenSnooze(p => !p);
+                    if (openSnooze) {
+                      setOpenSnooze(false);
+                      setDateVal(new Date());
+                    } else {
+                      onRemindInChange(remindIn);
+                      setOpenSnooze(true);
+                    }
                   }}
                 >
                   Snooze
@@ -179,7 +186,7 @@ const AppToast = ({ item }: any) => {
               <div className="yaba-toast__reminder-block__row">
                 <div className="yaba-toast__reminder-block__row-title">
                   <Icons.alarmBell />
-                  <p>{`Remind me ${remindIn !== "custom" ? "" : "in"}`}</p>
+                  <p>{`Remind me ${remindIn !== "custom" ? "" : "by"}`}</p>
                 </div>
 
                 <button

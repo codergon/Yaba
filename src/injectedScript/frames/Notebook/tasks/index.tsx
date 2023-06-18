@@ -1,13 +1,12 @@
 import dayjs from "dayjs";
 import Task from "./Task";
 import NewTask from "./NewTask";
-import { Fragment, useState } from "react";
 import { Trash2 } from "lucide-react";
-import ActiveTasks from "./ActiveTasks";
+import EditableTask from "./EditableTask";
+import { Fragment, useState } from "react";
 import NewButton from "../components/NewButton";
 import Emptystate from "../components/emptystate";
 import { useNotebook } from "../components/NotebookProvider";
-import EditableTask from "./EditableTask";
 
 const Tasks = () => {
   const [showNew, setShowNew] = useState("");

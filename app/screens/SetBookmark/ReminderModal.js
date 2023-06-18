@@ -13,7 +13,6 @@ const ReminderModal = ({
   setOpenRemTab,
   onRemindInChange,
 
-  //
   onscreen,
   autoTrig,
   setAutoTrig,

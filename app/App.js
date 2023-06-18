@@ -5,32 +5,42 @@ import {
   notifDataState,
   bookmarksDataState,
 } from "./atoms/appState";
-import { store } from "./store";
 import Tabs from "./layout/Tabs";
-import { useEffect } from "react";
 import Loader from "./common/Loader";
-import { Provider } from "react-redux";
 import Splash from "./screens/Onboarding";
+import { useEffect, useState } from "react";
+import AppProvider from "./context/AppContext";
 import AddBookmark from "./screens/SetBookmark";
 import ShareScreen from "./screens/Sharescreen";
 import SpaceArea from "./screens/Workspace/SpaceArea";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { MemoryRouter as Router, Routes, Route } from "react-router-dom";
-import AppProvider from "./context/AppContext";
 
 const App = () => {
+  const setUnread = useSetRecoilState(unreadState);
+  const [user, setUser] = useRecoilState(UserState);
+  const setNotifData = useSetRecoilState(notifDataState);
+  const setBookmarksData = useSetRecoilState(bookmarksDataState);
+
+  const [loading, setLoading] = useState(true);
+
   const applyTheme = async () => {
     document.documentElement.setAttribute("data-theme", "light");
   };
 
+  const verifyAuth = async () => {
+    const { user } = await chrome.storage.local.get("user");
+    if (!user?.uid) {
+      setUser(null);
+    }
+    setUser(user);
+    if (loading) setLoading(false);
+  };
+
   useEffect(() => {
     applyTheme();
+    verifyAuth();
   }, []);
-
-  const user = useRecoilValue(UserState);
-  const setUnread = useSetRecoilState(unreadState);
-  const setNotifData = useSetRecoilState(notifDataState);
-  const setBookmarksData = useSetRecoilState(bookmarksDataState);
 
   const checkUnread = async () => {
     const { unread } = await chrome.storage.local.get("unread");
@@ -47,39 +57,39 @@ const App = () => {
       }
       sendRes("Refetched");
     }
+    if (request.cmd == "refresh-auth-popup") {
+      verifyAuth();
+      sendRes("Done");
+    }
   });
 
-  return (
-    <Provider store={store}>
-      <div className="ext-container">
-        <Router>
-          <AppProvider>
-            <Routes>
-              {user === null || user === undefined || !user ? (
-                <Route exact path="/" element={<Splash />} />
-              ) : (
-                <>
-                  <Route exact path="/" element={<Tabs />} />
+  return loading ? (
+    <></>
+  ) : (
+    <div className="ext-container">
+      <Router>
+        <AppProvider>
+          <Routes>
+            {!user?.uid ? (
+              <Route exact path="/" element={<Splash />} />
+            ) : (
+              <>
+                <Route exact path="/" element={<Tabs />} />
 
-                  <Route exact path="/space-area" element={<SpaceArea />} />
-                  <Route
-                    exact
-                    path="/share-bookmark"
-                    element={<ShareScreen />}
-                  />
-                  <Route
-                    exact
-                    path="/create-bookmark"
-                    element={<AddBookmark />}
-                  />
-                  <Route path="*" element={<Loader />} />
-                </>
-              )}
-            </Routes>
-          </AppProvider>
-        </Router>
-      </div>
-    </Provider>
+                <Route exact path="/space-area" element={<SpaceArea />} />
+                <Route exact path="/share-bookmark" element={<ShareScreen />} />
+                <Route
+                  exact
+                  path="/create-bookmark"
+                  element={<AddBookmark />}
+                />
+                <Route path="*" element={<Loader />} />
+              </>
+            )}
+          </Routes>
+        </AppProvider>
+      </Router>
+    </div>
   );
 };
 

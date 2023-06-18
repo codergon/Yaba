@@ -35,21 +35,7 @@ const BookmarkReminder = ({ item, openRemTab, setOpenRemTab }) => {
     setOpenRemTab(false);
   };
 
-  const onRemindInChange = option => {
-    setRemindIn(option);
-    return;
-
-    if (option === "custom") {
-      setRemindIn(option);
-      return;
-    }
-
-    return;
-
-    const newDate = getReminderTimer(option);
-    setRemindIn(option);
-    onSetCustom(newDate);
-  };
+  const onRemindInChange = option => setRemindIn(option);
 
   return (
     openRemTab && (

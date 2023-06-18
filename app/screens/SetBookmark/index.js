@@ -314,7 +314,7 @@ const AddBookmark = () => {
                               <Icons.alarmBell />
                               <p>
                                 {`Remind me ${
-                                  remindIn !== "custom" ? "" : "in"
+                                  remindIn !== "custom" ? "" : "by"
                                 }`}
                               </p>
                             </div>

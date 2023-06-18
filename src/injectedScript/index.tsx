@@ -1,3 +1,4 @@
+import Auth from "./auth";
 import { useState } from "react";
 import { RecoilRoot } from "recoil";
 import Foreground from "./Foreground";
@@ -7,20 +8,19 @@ import { createRoot } from "react-dom/client";
 import en from "javascript-time-ago/locale/en.json";
 import fr from "javascript-time-ago/locale/fr.json";
 
-// import AuthScript from "./auth";
-// import Highlighter from "./frames/Highlighter";
+export const AUTH_URL = "https://getyaba.vercel.app/auth";
 
 TimeAgo.addLocale(fr);
 TimeAgo.addDefaultLocale(en);
 
 interface ComponentProps {
+  id: string;
   top?: string;
   left?: string;
   right?: string;
+  zIndex?: number;
   bottom?: string;
   translate?: string;
-  zIndex?: number;
-  id: string;
 }
 
 const init = (components: ComponentProps[]) => {
@@ -50,14 +50,10 @@ const [container, notesContainer] = init([
     id: "yaba-app-foreground",
   },
   {
-    bottom: "0px",
     right: "0px",
-
-    // left: "50%",
+    bottom: "0px",
     zIndex: 10e13,
-    // bottom: "35px",
     id: "yaba-app-notebook",
-    // translate: "translateX(-50%)",
   },
 ]);
 const root = createRoot(container);
@@ -141,14 +137,20 @@ const NotesRoot = () => {
   );
 };
 
-root.render(
-  <RecoilRoot>
-    <MainRoot key={"mainroot"} />
-  </RecoilRoot>
-);
+const render = () => {
+  const isAuthPage = window.location.href === AUTH_URL;
 
-notesRoot.render(
-  <RecoilRoot>
-    <NotesRoot key={"notesroot"} />
-  </RecoilRoot>
-);
+  root.render(
+    <RecoilRoot>
+      {isAuthPage ? <Auth /> : <MainRoot key={"mainroot"} />}
+    </RecoilRoot>
+  );
+
+  notesRoot.render(
+    <RecoilRoot>
+      {isAuthPage ? null : <NotesRoot key={"notesroot"} />}
+    </RecoilRoot>
+  );
+};
+
+render();

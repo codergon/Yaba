@@ -6,7 +6,6 @@ import SpaceModal from "./SpaceModal";
 import Comment from "./components/Comment";
 import { useLocation } from "react-router-dom";
 import DateHeader from "./components/DateHeader";
-import { DecodeStr } from "../../../utils/chrome";
 import EmptyState from "../../../common/EmptyState";
 import SpaceDetails from "./components/SpaceDetails";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -102,8 +101,7 @@ const SpaceArea = () => {
       );
       const lastMsg = lastRef[lastRef.length - 1];
 
-      const sender =
-        DecodeStr(currentUser?.uid) === DecodeStr(lastMsg?.user?.uid);
+      const sender = currentUser?.uid === lastMsg?.user?.uid;
 
       if (sender) ScrollToBottom();
     }

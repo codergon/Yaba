@@ -12,7 +12,6 @@ const Header = ({ label, title, tabs = false }) => {
         </button>
       ) : (
         <div className="screen-label">
-          {/* {label === "Yaba" && <Icons.AppLogo size={22} />} */}
           <p>{label}</p>
         </div>
       )}

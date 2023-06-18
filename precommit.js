@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-const filePath = "app/fb.js";
+const filePath = "app/fb.ts";
 
 function checkFirebaseConfig() {
   const fileContent = fs.readFileSync(filePath, "utf8");

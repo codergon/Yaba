@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Illustrations from "./Illustrations";
 import { SpinnerCircular } from "spinners-react";
 
-const Slides = ({ loading, handleAuth, error }) => {
+const Slides = ({ handleAuth }) => {
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
@@ -71,20 +71,7 @@ const Slides = ({ loading, handleAuth, error }) => {
       <div className="signin-btn-cover">
         <button className="signin-btn" onClick={handleAuth}>
           <p>Sign in with Google</p>
-          {loading ? (
-            <SpinnerCircular
-              size={16}
-              thickness={200}
-              color="#5d5d5d"
-              secondaryColor="#ddd"
-            />
-          ) : null}
         </button>
-        {error && (
-          <p className="error-msg">
-            {error || "An error occurred during sign in"}
-          </p>
-        )}
       </div>
     </div>
   );

@@ -1,4 +1,12 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+# Check for unstaged changes
+git diff --exit-code --quiet || (
+  echo ""
+  echo "Error: There are unstaged changes. Please stage or discard them before committing."
+  echo ""
+  exit 1
+)
+
 node precommit.js

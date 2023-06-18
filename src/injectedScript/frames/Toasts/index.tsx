@@ -1,5 +1,4 @@
 import Toast from "./AppToast";
-import "../../styles/foreground.scss";
 import { useEffect } from "react";
 import "../../styles/foreground.scss";
 import { useRecoilValue } from "recoil";
@@ -38,8 +37,8 @@ const Toasts = ({ setFrameWidth, setFrameHeight, showNotification }: any) => {
         </div>
       )}
 
-      {remData?.map((item: any) => (
-        <Toast item={item} key={item?.id} duration={10} />
+      {remData?.map((item: any, index) => (
+        <Toast item={item} key={item?.id || index} duration={10} />
       ))}
     </div>
   );

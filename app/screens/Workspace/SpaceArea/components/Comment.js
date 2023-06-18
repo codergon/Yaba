@@ -1,10 +1,8 @@
 import dayjs from "dayjs";
 import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
-import { UserState } from "../../../../atoms/appState";
-import Icons from "../../../../common/Icons";
 import Vectors from "../../../../common/Vectors";
-import { DecodeStr } from "../../../../utils/chrome";
+import { UserState } from "../../../../atoms/appState";
 
 const Comment = ({ comment }) => {
   const { user } = comment;
@@ -17,12 +15,10 @@ const Comment = ({ comment }) => {
   return (
     <div
       className={`space-area__comment${
-        DecodeStr(currentUser?.uid) !== DecodeStr(user?.uid)
-          ? ""
-          : " other-user"
+        currentUser?.uid !== user?.uid ? "" : " other-user"
       }`}
     >
-      {DecodeStr(currentUser?.uid) !== DecodeStr(user?.uid) && (
+      {currentUser?.uid !== user?.uid && (
         <div className="space-area__comment-media">
           {user?.photoURL && false ? (
             <div className="image-cover">
@@ -44,17 +40,16 @@ const Comment = ({ comment }) => {
       )}
 
       <div className="space-area__comment__content">
-        {DecodeStr(currentUser?.uid) !== DecodeStr(user?.uid) &&
-          (user?.name || user?.email) && (
-            <div className="space-area__comment__content-header">
-              <p className="space-area__comment__content-header-name">
-                {userName
-                  ? (userName[1] || userName[0]) +
-                    (userName[1] ? " " + userName[0][0] + "." : "")
-                  : user?.email}
-              </p>
-            </div>
-          )}
+        {currentUser?.uid !== user?.uid && (user?.name || user?.email) && (
+          <div className="space-area__comment__content-header">
+            <p className="space-area__comment__content-header-name">
+              {userName
+                ? (userName[1] || userName[0]) +
+                  (userName[1] ? " " + userName[0][0] + "." : "")
+                : user?.email}
+            </p>
+          </div>
+        )}
 
         <div className="space-area__comment__content-body">
           <p className="space-area__comment__content-body-text">

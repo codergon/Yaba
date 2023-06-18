@@ -25,13 +25,7 @@ body {
 
 body {
   height: 100%;
-  color: #000;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.35;
-  letter-spacing: 0.35px;
   background: transparent !important;
-  font-family: "Neue Montreal", sans-serif !important;
 }
 
 .yaba-notebook {
@@ -39,6 +33,14 @@ body {
   $color-1: #067bc2;
   $color-2: #e6f2f9;
   $container-border: 1px solid #eee;
+
+  * {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.35;
+    letter-spacing: 0.35px;
+    font-family: "Neue Montreal", sans-serif !important;
+  }
 
   right: 0px;
   gap: 6px !important;
@@ -216,9 +218,13 @@ body {
 
       .date-back_btn {
         gap: 8px;
+        color: #000;
         cursor: pointer;
         align-items: center;
         flex-direction: row;
+        h1 {
+          color: #000;
+        }
         svg {
           margin-top: 0.5px;
           * {

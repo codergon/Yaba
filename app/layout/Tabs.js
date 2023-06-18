@@ -20,10 +20,10 @@ import BrowsingHistory from "../screens/BrowsingHistory";
 
 const Tabs = () => {
   const user = useRecoilValue(UserState);
+  const setSpaces = useSetRecoilState(spaceItems);
   const setError = useSetRecoilState(spacesError);
   const setUnread = useSetRecoilState(unreadState);
   const setLoading = useSetRecoilState(spacesLoading);
-  const [spaces, setSpaces] = useRecoilState(spaceItems);
   const activeControl = useRecoilValue(activeControlState);
   const [activeTab, setActiveTab] = useRecoilState(activeTabState);
 
