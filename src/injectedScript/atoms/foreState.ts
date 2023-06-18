@@ -28,18 +28,3 @@ export const reminderDataState = atom<any[]>({
   key: "remsArray",
   default: [],
 });
-
-export const showMarkerState = atom<boolean>({
-  key: "showMarker",
-  default: false,
-});
-
-export const currentActionState = atom<string>({
-  key: "currentAction",
-  default: "none",
-});
-
-export const markerPositionState = atom<{ top: number; left: number }>({
-  key: "markerPosition",
-  default: { top: 0, left: 0 },
-});

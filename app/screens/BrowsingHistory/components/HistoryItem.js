@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { DotsThree } from "phosphor-react";
 import { useAppMenu } from "../../../hooks";
 import { useAppStore } from "../../../context/AppContext";
+import { Tornado } from "lucide-react";
 
 const DEFAULT_FAVICON = "https://www.gstatic.com/earth/00-favicon.ico";
 
@@ -63,13 +64,19 @@ const HistoryItem = ({ item }) => {
     <li className="history-item">
       <div className="favicon-noOfVisits">
         <div className="favicon">
-          <img
-            width="16"
-            height="16"
-            loading="lazy"
-            alt={`Favicon of: ${item?.url}`}
-            src={img ?? DEFAULT_FAVICON}
-          />
+          {imgError ? (
+            <>
+              <Tornado size={12} />
+            </>
+          ) : (
+            <img
+              width="16"
+              height="16"
+              loading="lazy"
+              alt={`Favicon of: ${item?.url}`}
+              src={img ?? DEFAULT_FAVICON}
+            />
+          )}
         </div>
 
         <div className="noOfVisits">

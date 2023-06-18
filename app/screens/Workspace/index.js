@@ -1,25 +1,19 @@
 import "./workspace.scss";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import SpaceListItem from "./SpaceListItem";
-import { useNavigate } from "react-router-dom";
-import EmptyState from "../../common/EmptyState";
 import {
-  filteredSpaces,
+  UserState,
   spaceItems,
   spacesError,
+  filteredSpaces,
   spacesLoading,
-  totalUnread,
-  UserState,
 } from "../../atoms/appState";
-import {
-  collection,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
-import { useEffect, useState } from "react";
 import { db } from "../../fb";
+import { useEffect, useState } from "react";
+import SpaceListItem from "./SpaceListItem";
+import { useNetworkState } from "react-use";
+import { useNavigate } from "react-router-dom";
+import EmptyState from "../../common/EmptyState";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 
 const Workspace = () => {
   let navigate = useNavigate();
@@ -34,6 +28,12 @@ const Workspace = () => {
   const [spacesList, setSpaces] = useRecoilState(spaceItems);
 
   const spaceArr = useRecoilValue(filteredSpaces);
+
+  const onlineState = useNetworkState();
+
+  useEffect(() => {
+    setError(!onlineState.online);
+  }, [onlineState.online]);
 
   useEffect(() => {
     if (!user?.uid) return;
@@ -89,14 +89,16 @@ const Workspace = () => {
       ) : error || spaceArr?.length === 0 ? (
         <EmptyState
           isError
-          isLoading={spaceListInitial?.length === 0}
-          noMatch={spaceListInitial?.length > 0 && spaceArr?.length === 0}
+          isLoading={spaceListInitial?.length === 0 && !error}
+          noMatch={
+            spaceListInitial?.length > 0 && spaceArr?.length === 0 && !error
+          }
           title={
-            spaceArr?.length === 0
+            !error
               ? spaceListInitial?.length === 0
                 ? "You are not a member of any workspace Create a new workspace to get started"
                 : "Your search did not match any workspace"
-              : "Error fetching spaces"
+              : "An error occurred while fetching spaces. Please check your connection"
           }
           description={error}
         />

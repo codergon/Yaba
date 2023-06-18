@@ -1,15 +1,37 @@
 import "./settings.scss";
 import { useRecoilState } from "recoil";
-import { useRef, useState } from "react";
 import Header from "../../layout/Header";
 import Vectors from "../../common/Vectors";
 import Categories from "../SetBookmark/Categories";
+import { useEffect, useRef, useState } from "react";
 import { useClickOut } from "../../hooks/useClickOut";
 import { ChevronDown, ExternalLink } from "lucide-react";
 import { UserState, categoriesDataState } from "../../atoms/appState";
 
 const Settings = () => {
+  const [img, setImg] = useState(null);
+  const [imgError, setImgError] = useState(false);
   const [user, setUser] = useRecoilState(UserState);
+
+  useEffect(() => {
+    const getImg = async () => {
+      if (!user?.photoURL) retrun;
+
+      try {
+        const img = await fetch(user?.photoURL);
+        if (img.status === 200) {
+          const image = await img.blob();
+          setImg(URL.createObjectURL(image));
+        } else {
+          setImgError(true);
+        }
+      } catch (error) {
+        setImgError(true);
+      }
+    };
+
+    getImg();
+  }, [user?.photoURL]);
 
   const signOut = async () => {
     setUser(null);
@@ -54,10 +76,10 @@ const Settings = () => {
               <div className="auth-block">
                 <div className="details">
                   <div className="img-cover">
-                    {user?.photoURL ? (
-                      <img src={user?.photoURL} alt="user avatar" />
-                    ) : (
+                    {imgError ? (
                       <Vectors.user />
+                    ) : (
+                      <img alt="user avatar" src={img} />
                     )}
                   </div>
                   <div className="username">

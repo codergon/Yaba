@@ -2,6 +2,7 @@ import { useState } from "react";
 import Vectors from "../../common/Vectors";
 import { FlowArrow } from "phosphor-react";
 import SocialIcons from "../../common/SocialIcons";
+import UserImage from "./components/UserImage";
 
 const shareOptions = [
   // "SMS",
@@ -101,15 +102,8 @@ const ShareOptions = ({ data, setScreen, setSendTo, contactList }) => {
                         setScreen("compose");
                       }}
                     >
-                      {contact?.photos ? (
-                        contact?.photos[0]?.url ? (
-                          <img src={contact?.photos[0]?.url} alt="" />
-                        ) : (
-                          <Vectors.user />
-                        )
-                      ) : (
-                        <Vectors.user />
-                      )}
+                      <UserImage photos={contact?.photos} size={34} />
+
                       <p>
                         {contact?.names
                           ? contact?.names[0]?.displayName

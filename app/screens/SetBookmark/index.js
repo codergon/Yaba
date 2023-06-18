@@ -157,7 +157,8 @@ const AddBookmark = () => {
       autoTrigger: openTab,
       id: crypto.randomUUID(),
       date: Number(dateVal.getTime()),
-      description: urlDescription,
+      description:
+        urlDescription || metas?.og?.description || metas?.twitter?.description,
       thumbnail: metas?.og?.image || metas?.twitter?.image,
       expired:
         isToday(dateVal) &&

@@ -50,34 +50,34 @@ const Compose = ({
   };
 
   const shareToContact = async () => {
-    if (!user?.uid || loading || sendTo?.length === 0) return;
-    setLoading(true);
-    setError(false);
-
-    const id = v4();
-    const commentId = v4();
-    const shareData = {
-      id,
-      bookmark: {
-        id: data?.id || "",
-        link: data?.link || "",
-        title: data?.title || "",
-        image: data?.thumbnail || "",
-        description: data?.description || "",
-      },
-      creatorId: user?.uid,
-      dateCreated: serverTimestamp(),
-      dateUpdated: serverTimestamp(),
-      messageCount: !!customMsg ? 1 : 0,
-      members: [
-        user?.email,
-        ...sendTo?.map(contact => contact.emailAddresses[0].value),
-      ],
-    };
-
-    const batch = writeBatch(db);
-
     try {
+      if (!user?.uid || loading || sendTo?.length === 0) return;
+      setLoading(true);
+      setError(false);
+
+      const id = v4();
+      const commentId = v4();
+      const shareData = {
+        id,
+        bookmark: {
+          id: data?.id || "",
+          link: data?.link || "",
+          title: data?.title || "",
+          image: data?.thumbnail || "",
+          description: data?.description || "",
+        },
+        creatorId: user?.uid,
+        dateCreated: serverTimestamp(),
+        dateUpdated: serverTimestamp(),
+        messageCount: !!customMsg ? 1 : 0,
+        members: [
+          user?.email,
+          ...sendTo?.map(contact => contact.emailAddresses[0].value),
+        ],
+      };
+
+      const batch = writeBatch(db);
+
       batch.set(doc(db, "workspaces", id), shareData);
 
       if (!!customMsg) {

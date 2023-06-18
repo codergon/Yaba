@@ -1,13 +1,12 @@
+import dayjs from "dayjs";
 import "./browsingHistory.scss";
+import { X } from "lucide-react";
 import Header from "../../layout/Header";
 import History from "./components/History";
 import SearchBar from "./components/SearchBar";
 import { FadersHorizontal } from "phosphor-react";
 import HistoryFilters from "./components/filters";
 import { useAppStore } from "../../context/AppContext";
-import Icons from "../../common/Icons";
-import { X } from "lucide-react";
-import dayjs from "dayjs";
 
 const BrowsingHistory = () => {
   const {

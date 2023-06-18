@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import NewButton from "../components/NewButton";
 import Emptystate from "../components/emptystate";
 import { NoteType, useNotebook } from "../components/NotebookProvider";
+import { X } from "phosphor-react";
 
 const NotesList = () => {
   const navigate = useNavigate();
@@ -71,6 +72,10 @@ const NotesList = () => {
               New Note
             </button>
           )}
+          {/* 
+          <button className="action-btn close-btn" onClick={e => {}}>
+            <X size={12} weight="bold" />
+          </button> */}
         </div>
       </div>
 
