@@ -7,7 +7,7 @@ const UserImage = ({ photos, size }) => {
 
   useEffect(() => {
     const getImg = async () => {
-      if (!photos || !photos[0]?.url) retrun;
+      if (!photos || !photos[0]?.url) return;
 
       try {
         const img = await fetch(photos[0]?.url);

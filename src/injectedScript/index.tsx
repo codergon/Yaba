@@ -7,8 +7,7 @@ import TimeAgo from "javascript-time-ago";
 import { createRoot } from "react-dom/client";
 import en from "javascript-time-ago/locale/en.json";
 import fr from "javascript-time-ago/locale/fr.json";
-
-export const AUTH_URL = "https://getyaba.vercel.app/auth";
+import { AUTH_URL } from "../../app/utils/constants";
 
 TimeAgo.addLocale(fr);
 TimeAgo.addDefaultLocale(en);

@@ -1,8 +1,8 @@
 @import "../core/partials";
 
 .page-content.add-bookmarks {
-  padding-top: 6px;
-  padding-bottom: 14px;
+  padding-top: 0px;
+  padding-bottom: 6px;
 
   $blur-bg: #f7f7f7;
 
@@ -74,7 +74,6 @@
       display: flex;
       position: relative;
       flex-direction: column;
-      padding: 4px 0px 8px;
 
       .media {
         flex: none;
@@ -384,12 +383,18 @@
     }
 
     .action-btns {
+      left: 0;
+      bottom: 0;
       gap: 14px;
       display: flex;
-      margin-top: 12px;
+      margin-top: 6px;
+      padding-top: 8px;
+      position: sticky;
       flex-direction: row;
       align-items: center;
+      background-color: #fff;
       justify-content: space-between;
+
       button {
         display: flex;
       }
